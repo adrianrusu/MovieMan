@@ -3,6 +3,8 @@ package com.learning.android.movieman;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +14,8 @@ import android.widget.Toast;
 public class MainActivity extends ActionBarActivity {
 
     private Toolbar toolbar;
+    private String[] titles = { "Home", "Watchlist", "Favorites", "About" };
+    private int[] icons = { R.drawable.ic_home, R.drawable.ic_theater, R.drawable.ic_star, R.drawable.ic_xml };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +28,13 @@ public class MainActivity extends ActionBarActivity {
 
         NavigationDrawerFragment navDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         navDrawerFragment.setUp((DrawerLayout) findViewById(R.id.drawer_layout), toolbar, R.id.fragment_navigation_drawer);
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.navdrawer_recycler);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.Adapter adapter = new NavbarRecyclerAdapter(titles, icons, this);
+
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
 
