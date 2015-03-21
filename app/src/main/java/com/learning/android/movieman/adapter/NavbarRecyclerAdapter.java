@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.learning.android.movieman.R;
 
@@ -17,11 +16,11 @@ import com.learning.android.movieman.R;
 public class NavbarRecyclerAdapter extends RecyclerView.Adapter<NavbarRecyclerAdapter.ViewHolder> {
     public static final int TYPE_HEADER = 0;
     public static final int TYPE_ITEM = 1;
-
+    Context context;
     private String[] navTitles;
     private int[] icons;
 
-    Context context;
+    private NavigationDrawerSelectionListener selectionListener;
 
     public NavbarRecyclerAdapter(String[] navTitles, int[] icons, Context context) {
         this.navTitles = navTitles;
@@ -32,14 +31,14 @@ public class NavbarRecyclerAdapter extends RecyclerView.Adapter<NavbarRecyclerAd
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_ITEM) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.drawer_item,parent,false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.drawer_item, parent, false);
 
             ViewHolder vhItem = new ViewHolder(v, viewType, context);
 
             return vhItem;
         } else if (viewType == TYPE_HEADER) {
-            
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.drawer_header,parent,false);
+
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.drawer_header, parent, false);
 
             ViewHolder vhHeader = new ViewHolder(v, viewType, context);
 
@@ -50,11 +49,10 @@ public class NavbarRecyclerAdapter extends RecyclerView.Adapter<NavbarRecyclerAd
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        if(holder.viewHolderType == TYPE_ITEM) {
+        if (holder.viewHolderType == TYPE_ITEM) {
             holder.textView.setText(navTitles[position - 1]);
-            holder.imageView.setImageResource(icons[position -1]);
-        }
-        else{
+            holder.imageView.setImageResource(icons[position - 1]);
+        } else {
         }
     }
 
@@ -75,7 +73,15 @@ public class NavbarRecyclerAdapter extends RecyclerView.Adapter<NavbarRecyclerAd
         return position == 0;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public void setSelectionListener(NavigationDrawerSelectionListener selectionListener) {
+        this.selectionListener = selectionListener;
+    }
+
+    public interface NavigationDrawerSelectionListener {
+        public void itemClicked(View view, int position);
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         int viewHolderType;
 
         TextView textView;
@@ -100,7 +106,9 @@ public class NavbarRecyclerAdapter extends RecyclerView.Adapter<NavbarRecyclerAd
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(context, "The item clicked is: " + getAdapterPosition(), Toast.LENGTH_LONG).show();
+            if (selectionListener != null) {
+                selectionListener.itemClicked(v, getAdapterPosition());
+            }
         }
     }
 }
