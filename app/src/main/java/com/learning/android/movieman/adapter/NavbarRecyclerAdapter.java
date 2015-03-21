@@ -1,4 +1,4 @@
-package com.learning.android.movieman;
+package com.learning.android.movieman.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.learning.android.movieman.R;
 
 /**
  * Created by adrianrusu on 3/16/15.

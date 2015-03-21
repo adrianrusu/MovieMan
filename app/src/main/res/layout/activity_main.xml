@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.learning.android.movieman.MainActivity">
+        tools:context="com.learning.android.movieman.activity.MainActivity">
 
         <include
             android:id="@+id/app_bar"
@@ -24,7 +24,7 @@
 
     <fragment
         android:id="@+id/fragment_navigation_drawer"
-        android:name="com.learning.android.movieman.NavigationDrawerFragment"
+        android:name="com.learning.android.movieman.fragment.NavigationDrawerFragment"
         android:layout_width="@dimen/nav_drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
