@@ -7,10 +7,8 @@ import java.util.List;
 /**
  * Created by adrianrusu on 3/21/15.
  */
-public class Movie {
-    private Long id;
+public class Movie extends MovieSmall {
     private String imdbId;
-    private String title;
     private String originalTitle;
     private String language;
     private String originalLanguage;
@@ -18,26 +16,21 @@ public class Movie {
     private List<Genre> genres;
     private List<Company> productionCompanies;
     private String overview;
-    private String posterPath;
-    private Double popularity;
-    private Date releaseDate;
     private BigDecimal budget;
     private BigDecimal revenue;
     private Integer runtime;
     private String status;
     private String tagLine;
-    private Double voteAverage;
-    private Integer voteCount;
 
     public Movie() {
     }
 
-    public Movie(Long id, String imdbId, String title, String originalTitle, String language, String originalLanguage, String homepage,
-                 List<Genre> genres, List<Company> productionCompanies, String overview, String posterPath, Double popularity, Date releaseDate,
-                 BigDecimal budget, BigDecimal revenue, Integer runtime, String status, String tagLine, Double voteAverage, Integer voteCount) {
-        this.id = id;
+    public Movie(Long id, String title, Date releaseDate, Double voteAverage, Integer voteCount, String posterPath,
+                 Double popularity, String imdbId, String originalTitle, String language, String originalLanguage,
+                 String homepage, List<Genre> genres, List<Company> productionCompanies, String overview, BigDecimal budget,
+                 BigDecimal revenue, Integer runtime, String status, String tagLine) {
+        super(id, title, releaseDate, voteAverage, voteCount, posterPath, popularity);
         this.imdbId = imdbId;
-        this.title = title;
         this.originalTitle = originalTitle;
         this.language = language;
         this.originalLanguage = originalLanguage;
@@ -45,24 +38,11 @@ public class Movie {
         this.genres = genres;
         this.productionCompanies = productionCompanies;
         this.overview = overview;
-        this.posterPath = posterPath;
-        this.popularity = popularity;
-        this.releaseDate = releaseDate;
         this.budget = budget;
         this.revenue = revenue;
         this.runtime = runtime;
         this.status = status;
         this.tagLine = tagLine;
-        this.voteAverage = voteAverage;
-        this.voteCount = voteCount;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getImdbId() {
@@ -71,14 +51,6 @@ public class Movie {
 
     public void setImdbId(String imdbId) {
         this.imdbId = imdbId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getOriginalTitle() {
@@ -137,30 +109,6 @@ public class Movie {
         this.overview = overview;
     }
 
-    public String getPosterPath() {
-        return posterPath;
-    }
-
-    public void setPosterPath(String posterPath) {
-        this.posterPath = posterPath;
-    }
-
-    public Double getPopularity() {
-        return popularity;
-    }
-
-    public void setPopularity(Double popularity) {
-        this.popularity = popularity;
-    }
-
-    public Date getReleaseDate() {
-        return releaseDate;
-    }
-
-    public void setReleaseDate(Date releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
     public BigDecimal getBudget() {
         return budget;
     }
@@ -199,21 +147,5 @@ public class Movie {
 
     public void setTagLine(String tagLine) {
         this.tagLine = tagLine;
-    }
-
-    public Double getVoteAverage() {
-        return voteAverage;
-    }
-
-    public void setVoteAverage(Double voteAverage) {
-        this.voteAverage = voteAverage;
-    }
-
-    public Integer getVoteCount() {
-        return voteCount;
-    }
-
-    public void setVoteCount(Integer voteCount) {
-        this.voteCount = voteCount;
     }
 }
