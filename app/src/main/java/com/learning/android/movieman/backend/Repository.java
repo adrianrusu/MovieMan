@@ -45,4 +45,8 @@ public class Repository {
     public RequestQueue getRequestQueue() {
         return requestQueue;
     }
+
+    public ImageLoader getImageLoader() {
+        return imageLoader;
+    }
 }

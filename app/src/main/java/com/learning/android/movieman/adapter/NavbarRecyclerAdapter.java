@@ -107,7 +107,7 @@ public class NavbarRecyclerAdapter extends RecyclerView.Adapter<NavbarRecyclerAd
         @Override
         public void onClick(View v) {
             if (selectionListener != null) {
-                selectionListener.itemClicked(v, getAdapterPosition());
+                selectionListener.itemClicked(v, getPosition());
             }
         }
     }

@@ -3,7 +3,7 @@ package com.learning.android.movieman.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.learning.android.movieman.R;
+import com.learning.android.movieman.adapter.MovieListAdapter;
 import com.learning.android.movieman.backend.Repository;
 import com.learning.android.movieman.model.MovieSmall;
 import com.learning.android.movieman.util.JsonKeys;
@@ -56,6 +57,7 @@ public class HomeFragment extends Fragment {
     private String mParam2;
 
     private RecyclerView moviesRecyclerView;
+    private MovieListAdapter movieListAdapter;
 
     private RequestQueue requestQueue;
     private List<MovieSmall> movies = new ArrayList<>();
@@ -94,7 +96,8 @@ public class HomeFragment extends Fragment {
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, getRequestUrl(), "", new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                parseJsonResponse(response);
+                movies = parseJsonResponse(response);
+                movieListAdapter.setElements(movies);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -111,7 +114,10 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         moviesRecyclerView = (RecyclerView) view.findViewById(R.id.home_movies_list);
-        moviesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        moviesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        moviesRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        movieListAdapter = new MovieListAdapter(getActivity());
+        moviesRecyclerView.setAdapter(movieListAdapter);
 
         // Inflate the layout for this fragment
         return view;
@@ -121,9 +127,10 @@ public class HomeFragment extends Fragment {
         return new StringBuilder(UrlEndpoints.NOW_PLAYING_URL).append(UrlEndpoints.URL_PARAM_API_KEY).toString();
     }
 
-    private void parseJsonResponse(JSONObject jsonObject) {
+    private List<MovieSmall> parseJsonResponse(JSONObject jsonObject) {
+        List<MovieSmall> result = new ArrayList<>();
         if (jsonObject == null || jsonObject.length() == 1) {
-            return;
+            return result;
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         try {
@@ -138,7 +145,7 @@ public class HomeFragment extends Fragment {
                         jsonMovie.getString(KEY_POSTER_PATH),
                         jsonMovie.getDouble(KEY_POPULARITY)
                 );
-                movies.add(movie);
+                result.add(movie);
             }
             Toast.makeText(getActivity(), "Processed " + movies.size() + " movies from JSON", Toast.LENGTH_LONG).show();
         } catch (JSONException e) {
@@ -146,6 +153,7 @@ public class HomeFragment extends Fragment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        return result;
     }
 
 }
