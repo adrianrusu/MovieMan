@@ -1,15 +1,16 @@
 package com.learning.android.movieman.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.joooonho.SelectableRoundedImageView;
 import com.learning.android.movieman.R;
 import com.learning.android.movieman.backend.Repository;
 import com.learning.android.movieman.model.MovieSmall;
@@ -41,6 +42,10 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     @Override
     public ViewHolderMovies onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = layoutInflater.inflate(R.layout.home_movie_item, viewGroup, false);
+
+        CardView cardView = (CardView) view.findViewById(R.id.home_movie_card_view);
+        cardView.setPreventCornerOverlap(false);
+
         ViewHolderMovies viewHolder = new ViewHolderMovies(view);
         return viewHolder;
     }
@@ -72,12 +77,12 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     public static class ViewHolderMovies extends RecyclerView.ViewHolder {
 
-        private ImageView moviePoster;
+        private SelectableRoundedImageView moviePoster;
         private TextView movieTitle;
 
         public ViewHolderMovies(View itemView) {
             super(itemView);
-            moviePoster = (ImageView) itemView.findViewById(R.id.movie_list_poster);
+            moviePoster = (SelectableRoundedImageView) itemView.findViewById(R.id.movie_list_poster);
             movieTitle = (TextView) itemView.findViewById(R.id.movie_list_title);
         }
     }
