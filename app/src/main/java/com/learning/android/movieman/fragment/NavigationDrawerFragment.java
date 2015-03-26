@@ -23,15 +23,14 @@ public class NavigationDrawerFragment extends Fragment implements NavbarRecycler
 
     private static final String PREF_FILE_NAME = "testpref";
     private static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
-    private NavbarRecyclerAdapter adapter;
+
     private String[] titles = {"Home", "Watchlist", "Favorites", "About"};
     private int[] icons = {R.drawable.ic_home, R.drawable.ic_theater, R.drawable.ic_star, R.drawable.ic_xml};
-    private ActionBarDrawerToggle mDrawerToggle;
-    private DrawerLayout mDrawerLayout;
-    private View containerView;
-    private RecyclerView recyclerView;
-    private boolean mUserLearnedDrawer;
-    private boolean mFromSavedInstanceState;
+
+    private NavbarRecyclerAdapter adapter;
+    private ActionBarDrawerToggle drawerToggle;
+    private boolean userLearnedDrawer;
+    private boolean fromSavedInstanceState;
 
     public NavigationDrawerFragment() {
     }
@@ -52,21 +51,20 @@ public class NavigationDrawerFragment extends Fragment implements NavbarRecycler
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mUserLearnedDrawer = Boolean.valueOf(readFromPreferences(getActivity(), KEY_USER_LEARNED_DRAWER, "false"));
+        userLearnedDrawer = Boolean.valueOf(readFromPreferences(getActivity(), KEY_USER_LEARNED_DRAWER, "false"));
         if (savedInstanceState != null) {
-            mFromSavedInstanceState = true;
+            fromSavedInstanceState = true;
         }
     }
 
     public void setUp(DrawerLayout drawerLayout, Toolbar toolbar, int fragmentId) {
-        mDrawerLayout = drawerLayout;
-        mDrawerToggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_closed) {
+        drawerToggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_closed) {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                if (!mUserLearnedDrawer) {
-                    mUserLearnedDrawer = true;
-                    saveToPreferences(getActivity(), KEY_USER_LEARNED_DRAWER, Boolean.toString(mUserLearnedDrawer));
+                if (!userLearnedDrawer) {
+                    userLearnedDrawer = true;
+                    saveToPreferences(getActivity(), KEY_USER_LEARNED_DRAWER, Boolean.toString(userLearnedDrawer));
                 }
                 getActivity().invalidateOptionsMenu();
             }
@@ -77,17 +75,17 @@ public class NavigationDrawerFragment extends Fragment implements NavbarRecycler
                 getActivity().invalidateOptionsMenu();
             }
         };
-        containerView = getActivity().findViewById(fragmentId);
+        View containerView = getActivity().findViewById(fragmentId);
 
-        if (!mUserLearnedDrawer && !mFromSavedInstanceState) {
-            mDrawerLayout.openDrawer(containerView);
+        if (!userLearnedDrawer && !fromSavedInstanceState) {
+            drawerLayout.openDrawer(containerView);
         }
 
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-        mDrawerLayout.post(new Runnable() {
+        drawerLayout.setDrawerListener(drawerToggle);
+        drawerLayout.post(new Runnable() {
             @Override
             public void run() {
-                mDrawerToggle.syncState();
+                drawerToggle.syncState();
             }
         });
     }
@@ -97,7 +95,7 @@ public class NavigationDrawerFragment extends Fragment implements NavbarRecycler
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
 
-        recyclerView = (RecyclerView) layout.findViewById(R.id.navdrawer_recycler);
+        RecyclerView recyclerView = (RecyclerView) layout.findViewById(R.id.navdrawer_recycler);
         recyclerView.setHasFixedSize(true);
 
         adapter = new NavbarRecyclerAdapter(titles, icons, layout.getContext());

@@ -1,16 +1,23 @@
 package com.learning.android.movieman.model;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by adrianrusu on 3/21/15.
  */
-public class MovieSmall {
+public class MovieSmall implements Serializable {
     private Long id;
     private String title;
+    @SerializedName("release_date")
     private Date releaseDate;
+    @SerializedName("vote_average")
     private Double voteAverage;
+    @SerializedName("vote_count")
     private Integer voteCount;
+    @SerializedName("poster_path")
     private String posterPath;
     private Double popularity;
 

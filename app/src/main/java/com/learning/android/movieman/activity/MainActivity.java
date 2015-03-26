@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.learning.android.movieman.R;
+import com.learning.android.movieman.fragment.HomeFragment;
 import com.learning.android.movieman.fragment.NavigationDrawerFragment;
 
 
@@ -47,7 +48,9 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_refresh) {
+            HomeFragment homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_home);
+            homeFragment.refresh();
             return true;
         }
 

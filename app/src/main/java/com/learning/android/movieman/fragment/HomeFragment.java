@@ -5,59 +5,43 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.learning.android.movieman.R;
 import com.learning.android.movieman.adapter.MovieListAdapter;
 import com.learning.android.movieman.backend.Repository;
 import com.learning.android.movieman.model.MovieSmall;
-import com.learning.android.movieman.util.JsonKeys;
+import com.learning.android.movieman.util.JsonUtils;
 import com.learning.android.movieman.util.UrlEndpoints;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
-import static com.learning.android.movieman.util.JsonKeys.Movie.KEY_ID;
-import static com.learning.android.movieman.util.JsonKeys.Movie.KEY_POPULARITY;
-import static com.learning.android.movieman.util.JsonKeys.Movie.KEY_POSTER_PATH;
-import static com.learning.android.movieman.util.JsonKeys.Movie.KEY_RELEASE_DATE;
-import static com.learning.android.movieman.util.JsonKeys.Movie.KEY_TITLE;
-import static com.learning.android.movieman.util.JsonKeys.Movie.KEY_VOTE_AVERAGE;
-import static com.learning.android.movieman.util.JsonKeys.Movie.KEY_VOTE_COUNT;
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class HomeFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private static final String MOVIES_LIST = "movies_list";
 
     private RecyclerView moviesRecyclerView;
     private MovieListAdapter movieListAdapter;
+    private TextView textViewError;
 
     private RequestQueue requestQueue;
     private List<MovieSmall> movies = new ArrayList<>();
@@ -66,61 +50,65 @@ public class HomeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        textViewError = (TextView) view.findViewById(R.id.text_error);
+        moviesRecyclerView = (RecyclerView) view.findViewById(R.id.home_movies_list);
+
+        moviesRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        movieListAdapter = new MovieListAdapter(getActivity());
+        moviesRecyclerView.setAdapter(movieListAdapter);
+        if (savedInstanceState != null) {
+            movies = (List<MovieSmall>) savedInstanceState.getSerializable(MOVIES_LIST);
+            movieListAdapter.setElements(movies);
+        } else {
+            sendApiRequest();
+        }
+
+        // Inflate the layout for this fragment
+        return view;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(MOVIES_LIST, (java.io.Serializable) movies);
+    }
 
+    private void sendApiRequest() {
         requestQueue = Repository.getInstance().getRequestQueue();
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, getRequestUrl(), "", new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, getRequestUrl(), (String) null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                movies = parseJsonResponse(response);
-                movieListAdapter.setElements(movies);
+                handleResponse(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
-                Log.d(this.getClass().getCanonicalName(), error.toString());
+                handleError(error);
             }
         });
         requestQueue.add(request);
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-        moviesRecyclerView = (RecyclerView) view.findViewById(R.id.home_movies_list);
-//        moviesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        moviesRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        movieListAdapter = new MovieListAdapter(getActivity());
-        moviesRecyclerView.setAdapter(movieListAdapter);
+    private void handleResponse(JSONObject response) {
+        textViewError.setVisibility(View.GONE);
+        movies = parseJsonResponse(response);
+        movieListAdapter.setElements(movies);
+    }
 
-        // Inflate the layout for this fragment
-        return view;
+    private void handleError(VolleyError error) {
+        textViewError.setVisibility(View.VISIBLE);
+        if (error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
+            textViewError.setText(R.string.error_timeout);
+        } else if (error instanceof AuthFailureError || error instanceof ServerError) {
+            textViewError.setText(R.string.error_auth_failure);
+        } else if (error instanceof ParseError) {
+            textViewError.setText(R.string.error_parser);
+        }
     }
 
     private String getRequestUrl() {
@@ -132,28 +120,20 @@ public class HomeFragment extends Fragment {
         if (jsonObject == null || jsonObject.length() == 1) {
             return result;
         }
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+
         try {
-            JSONArray arrayMovies = jsonObject.getJSONArray(JsonKeys.KEY_RESULTS);
-            for (int i = 0; i < arrayMovies.length(); i++) {
-                JSONObject jsonMovie = arrayMovies.getJSONObject(i);
-                MovieSmall movie = new MovieSmall(jsonMovie.getLong(KEY_ID),
-                        jsonMovie.getString(KEY_TITLE),
-                        sdf.parse(jsonMovie.getString(KEY_RELEASE_DATE)),
-                        jsonMovie.getDouble(KEY_VOTE_AVERAGE),
-                        new Integer(jsonMovie.getInt(KEY_VOTE_COUNT)),
-                        jsonMovie.getString(KEY_POSTER_PATH),
-                        jsonMovie.getDouble(KEY_POPULARITY)
-                );
-                result.add(movie);
-            }
-            Toast.makeText(getActivity(), "Processed " + movies.size() + " movies from JSON", Toast.LENGTH_LONG).show();
+            Gson gson = JsonUtils.getGsonForApi();
+            result = gson.fromJson(jsonObject.get(JsonUtils.KEY_RESULTS).toString(), new TypeToken<List<MovieSmall>>() {
+            }.getType());
         } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
+
         return result;
     }
 
+    public void refresh() {
+        sendApiRequest();
+    }
 }

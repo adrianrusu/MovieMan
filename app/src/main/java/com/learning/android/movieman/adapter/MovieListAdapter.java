@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -36,7 +37,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     public void setElements(List<MovieSmall> elements) {
         this.movies = elements;
-        notifyItemMoved(0, elements.size());
+        notifyItemRangeChanged(0, elements.size());
     }
 
     @Override
@@ -55,19 +56,30 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         MovieSmall movie = movies.get(i);
         viewHolderMovies.movieTitle.setText(movie.getTitle());
 
-        StringBuilder posterUrl = new StringBuilder(UrlEndpoints.URL_API_IMAGES);
-        posterUrl.append("w500").append(movie.getPosterPath());
-        imageLoader.get(posterUrl.toString(), new ImageLoader.ImageListener() {
-            @Override
-            public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-                viewHolderMovies.moviePoster.setImageBitmap(response.getBitmap());
-            }
+        if (movie.getPosterPath() != null) {
+            StringBuilder posterUrl = new StringBuilder(UrlEndpoints.URL_API_IMAGES);
+            posterUrl.append("w342").append(movie.getPosterPath());
+            imageLoader.get(posterUrl.toString(), new ImageLoader.ImageListener() {
+                @Override
+                public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                    viewHolderMovies.moviePoster.setImageBitmap(response.getBitmap());
+                }
 
-            @Override
-            public void onErrorResponse(VolleyError error) {
+                @Override
+                public void onErrorResponse(VolleyError error) {
 
-            }
-        });
+                }
+            });
+        } else {
+            viewHolderMovies.moviePoster.setVisibility(View.GONE);
+            viewHolderMovies.posterNotAvailable.setVisibility(View.VISIBLE);
+
+            RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+
+            p.addRule(RelativeLayout.BELOW, R.id.text_poster_not_available);
+            viewHolderMovies.movieTitle.setLayoutParams(p);
+        }
     }
 
     @Override
@@ -79,11 +91,13 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
         private SelectableRoundedImageView moviePoster;
         private TextView movieTitle;
+        private TextView posterNotAvailable;
 
         public ViewHolderMovies(View itemView) {
             super(itemView);
             moviePoster = (SelectableRoundedImageView) itemView.findViewById(R.id.movie_list_poster);
-            movieTitle = (TextView) itemView.findViewById(R.id.movie_list_title);
+            movieTitle = (TextView) itemView.findViewById(R.id.text_movie_title);
+            posterNotAvailable = (TextView) itemView.findViewById(R.id.text_poster_not_available);
         }
     }
 
