@@ -20,7 +20,7 @@ public class NavbarRecyclerAdapter extends RecyclerView.Adapter<NavbarRecyclerAd
     private String[] navTitles;
     private int[] icons;
 
-    private NavigationDrawerSelectionListener selectionListener;
+    private RecyclerViewSelectionListener selectionListener;
 
     public NavbarRecyclerAdapter(String[] navTitles, int[] icons, Context context) {
         this.navTitles = navTitles;
@@ -73,12 +73,8 @@ public class NavbarRecyclerAdapter extends RecyclerView.Adapter<NavbarRecyclerAd
         return position == 0;
     }
 
-    public void setSelectionListener(NavigationDrawerSelectionListener selectionListener) {
+    public void setSelectionListener(RecyclerViewSelectionListener selectionListener) {
         this.selectionListener = selectionListener;
-    }
-
-    public interface NavigationDrawerSelectionListener {
-        public void itemClicked(View view, int position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

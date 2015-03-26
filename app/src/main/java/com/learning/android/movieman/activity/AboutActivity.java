@@ -1,12 +1,14 @@
 package com.learning.android.movieman.activity;
 
+import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
+import com.learning.android.movieman.BuildConfig;
 import com.learning.android.movieman.R;
 
 
@@ -22,6 +24,8 @@ public class AboutActivity extends ActionBarActivity {
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ((TextView) findViewById(R.id.text_about_app_version)).setText(new StringBuilder(R.string.app_version).append(BuildConfig.VERSION_NAME).toString());
     }
 
 

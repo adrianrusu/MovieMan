@@ -17,4 +17,8 @@
     <string name="error_parser">Oops! Could not parse response</string>
     <string name="poster_not_available">Poster is not available</string>
     <string name="action_refresh">Refresh</string>
+    <string name="app_version">Version:</string>
+    <string name="university">Bucharest Academy of\nEconomic Studies</string>
+    <string name="developed_by">Designed and developed by</string>
+    <string name="developers">Adrian Rusu\nAlexandru Popescu\nLiviu Rusu</string>
 </resources>

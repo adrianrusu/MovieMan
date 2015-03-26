@@ -29,15 +29,11 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     private LayoutInflater layoutInflater;
 
     private ImageLoader imageLoader;
+    private RecyclerViewSelectionListener selectionListener;
 
     public MovieListAdapter(Context context) {
         layoutInflater = LayoutInflater.from(context);
         imageLoader = Repository.getInstance().getImageLoader();
-    }
-
-    public void setElements(List<MovieSmall> elements) {
-        this.movies = elements;
-        notifyItemRangeChanged(0, elements.size());
     }
 
     @Override
@@ -87,7 +83,17 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         return movies.size();
     }
 
-    public static class ViewHolderMovies extends RecyclerView.ViewHolder {
+
+    public void setElements(List<MovieSmall> elements) {
+        this.movies = elements;
+        notifyItemRangeChanged(0, elements.size());
+    }
+
+    public void setSelectionListener(RecyclerViewSelectionListener selectionListener) {
+        this.selectionListener = selectionListener;
+    }
+
+    public class ViewHolderMovies extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private SelectableRoundedImageView moviePoster;
         private TextView movieTitle;
@@ -95,9 +101,19 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
         public ViewHolderMovies(View itemView) {
             super(itemView);
+            itemView.setClickable(true);
+            itemView.setOnClickListener(this);
+
             moviePoster = (SelectableRoundedImageView) itemView.findViewById(R.id.movie_list_poster);
             movieTitle = (TextView) itemView.findViewById(R.id.text_movie_title);
             posterNotAvailable = (TextView) itemView.findViewById(R.id.text_poster_not_available);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (selectionListener != null) {
+                selectionListener.itemClicked(v, getPosition());
+            }
         }
     }
 

@@ -18,8 +18,9 @@ import android.widget.Toast;
 import com.learning.android.movieman.R;
 import com.learning.android.movieman.activity.AboutActivity;
 import com.learning.android.movieman.adapter.NavbarRecyclerAdapter;
+import com.learning.android.movieman.adapter.RecyclerViewSelectionListener;
 
-public class NavigationDrawerFragment extends Fragment implements NavbarRecyclerAdapter.NavigationDrawerSelectionListener {
+public class NavigationDrawerFragment extends Fragment implements RecyclerViewSelectionListener {
 
     private static final String PREF_FILE_NAME = "testpref";
     private static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
