@@ -1,0 +1,63 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relative_layout_movie_details"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.learning.android.movieman.activity.MovieActivity">
+
+    <RelativeLayout
+        android:id="@+id/layout_movie_details_header_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image_movie_detail_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:cropToPadding="false"
+            android:scaleType="centerCrop"
+            android:src="@drawable/chappie_backdrop" />
+    </RelativeLayout>
+
+    <!--What is this?-->
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_below="@id/layout_movie_details_header_holder"-->
+    <!--android:layout_marginTop="128dp" />-->
+    <!--End of what is this!-->
+
+    <com.learning.android.movieman.view.ObservableScrollView
+        android:id="@+id/scrollview_movie_details"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/layout_movie_details_header_holder"
+        android:clipToPadding="false"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/layout_movie_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/abc_action_bar_default_padding_material"
+            android:paddingRight="@dimen/abc_action_bar_default_padding_material">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Movie Title"
+                    android:textSize="@dimen/abc_text_size_title_material" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </com.learning.android.movieman.view.ObservableScrollView>
+
+</RelativeLayout>

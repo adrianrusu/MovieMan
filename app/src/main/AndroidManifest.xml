@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.learning.android.movieman">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".backend.MovieManApplication"
         android:allowBackup="true"
@@ -24,7 +26,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.MainActivity" />
         </activity>
+        <activity
+            android:name=".activity.MovieActivity"
+            android:label="@string/title_activity_movie"
+            android:parentActivityName=".activity.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.learning.android.movieman.activity.MainActivity" />
+        </activity>
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

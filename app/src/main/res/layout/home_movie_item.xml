@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/poster"
+                android:src="@drawable/chappie_poster"
                 app:sriv_left_bottom_corner_radius="0dp"
                 app:sriv_left_top_corner_radius="2dp"
                 app:sriv_right_bottom_corner_radius="0dp"

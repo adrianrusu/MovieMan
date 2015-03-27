@@ -1,6 +1,7 @@
 package com.learning.android.movieman.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -24,7 +25,9 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.learning.android.movieman.R;
+import com.learning.android.movieman.activity.MovieActivity;
 import com.learning.android.movieman.adapter.MovieListAdapter;
+import com.learning.android.movieman.adapter.RecyclerViewSelectionListener;
 import com.learning.android.movieman.backend.Repository;
 import com.learning.android.movieman.model.MovieSmall;
 import com.learning.android.movieman.util.JsonUtils;
@@ -36,7 +39,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements RecyclerViewSelectionListener {
     private static final String MOVIES_LIST = "movies_list";
 
     private RecyclerView moviesRecyclerView;
@@ -60,6 +63,7 @@ public class HomeFragment extends Fragment {
 
         moviesRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         movieListAdapter = new MovieListAdapter(getActivity());
+        movieListAdapter.setSelectionListener(this);
         moviesRecyclerView.setAdapter(movieListAdapter);
         if (savedInstanceState != null) {
             movies = (List<MovieSmall>) savedInstanceState.getSerializable(MOVIES_LIST);
@@ -135,5 +139,12 @@ public class HomeFragment extends Fragment {
 
     public void refresh() {
         sendApiRequest();
+    }
+
+    @Override
+    public void itemClicked(View view, int position) {
+        Intent movieDetailsIntent = new Intent(getActivity(), MovieActivity.class);
+        movieDetailsIntent.putExtra("id", movies.get(position).getId());
+        startActivity(movieDetailsIntent);
     }
 }
