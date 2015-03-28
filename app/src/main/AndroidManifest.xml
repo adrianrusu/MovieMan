@@ -27,7 +27,7 @@
                 android:value=".activity.MainActivity" />
         </activity>
         <activity
-            android:name=".activity.MovieActivity"
+            android:name=".activity.MovieDetailsActivity"
             android:label="@string/title_activity_movie"
             android:parentActivityName=".activity.MainActivity">
             <meta-data

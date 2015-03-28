@@ -22,10 +22,8 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.learning.android.movieman.R;
-import com.learning.android.movieman.activity.MovieActivity;
+import com.learning.android.movieman.activity.MovieDetailsActivity;
 import com.learning.android.movieman.adapter.MovieListAdapter;
 import com.learning.android.movieman.adapter.RecyclerViewSelectionListener;
 import com.learning.android.movieman.backend.Repository;
@@ -33,7 +31,6 @@ import com.learning.android.movieman.model.MovieSmall;
 import com.learning.android.movieman.util.JsonUtils;
 import com.learning.android.movieman.util.UrlEndpoints;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -46,7 +43,6 @@ public class HomeFragment extends Fragment implements RecyclerViewSelectionListe
     private MovieListAdapter movieListAdapter;
     private TextView textViewError;
 
-    private RequestQueue requestQueue;
     private List<MovieSmall> movies = new ArrayList<>();
 
     public HomeFragment() {
@@ -65,6 +61,7 @@ public class HomeFragment extends Fragment implements RecyclerViewSelectionListe
         movieListAdapter = new MovieListAdapter(getActivity());
         movieListAdapter.setSelectionListener(this);
         moviesRecyclerView.setAdapter(movieListAdapter);
+
         if (savedInstanceState != null) {
             movies = (List<MovieSmall>) savedInstanceState.getSerializable(MOVIES_LIST);
             movieListAdapter.setElements(movies);
@@ -83,7 +80,7 @@ public class HomeFragment extends Fragment implements RecyclerViewSelectionListe
     }
 
     private void sendApiRequest() {
-        requestQueue = Repository.getInstance().getRequestQueue();
+        RequestQueue requestQueue = Repository.getInstance().getRequestQueue();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, getRequestUrl(), (String) null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -100,7 +97,7 @@ public class HomeFragment extends Fragment implements RecyclerViewSelectionListe
 
     private void handleResponse(JSONObject response) {
         textViewError.setVisibility(View.GONE);
-        movies = parseJsonResponse(response);
+        movies = JsonUtils.parseMovieSmallListJsonResponse(response);
         movieListAdapter.setElements(movies);
     }
 
@@ -116,25 +113,7 @@ public class HomeFragment extends Fragment implements RecyclerViewSelectionListe
     }
 
     private String getRequestUrl() {
-        return new StringBuilder(UrlEndpoints.NOW_PLAYING_URL).append(UrlEndpoints.URL_PARAM_API_KEY).toString();
-    }
-
-    private List<MovieSmall> parseJsonResponse(JSONObject jsonObject) {
-        List<MovieSmall> result = new ArrayList<>();
-        if (jsonObject == null || jsonObject.length() == 1) {
-            return result;
-        }
-
-        try {
-            Gson gson = JsonUtils.getGsonForApi();
-            result = gson.fromJson(jsonObject.get(JsonUtils.KEY_RESULTS).toString(), new TypeToken<List<MovieSmall>>() {
-            }.getType());
-        } catch (JSONException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-
-        return result;
+        return UrlEndpoints.NOW_PLAYING_URL + UrlEndpoints.URL_PARAM_API_KEY;
     }
 
     public void refresh() {
@@ -143,7 +122,7 @@ public class HomeFragment extends Fragment implements RecyclerViewSelectionListe
 
     @Override
     public void itemClicked(View view, int position) {
-        Intent movieDetailsIntent = new Intent(getActivity(), MovieActivity.class);
+        Intent movieDetailsIntent = new Intent(getActivity(), MovieDetailsActivity.class);
         movieDetailsIntent.putExtra("id", movies.get(position).getId());
         startActivity(movieDetailsIntent);
     }

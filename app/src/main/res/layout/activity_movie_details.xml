@@ -1,0 +1,85 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relative_layout_movie_details"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.learning.android.movieman.activity.MovieDetailsActivity">
+
+    <RelativeLayout
+        android:id="@+id/layout_movie_details_header_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image_movie_detail_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:cropToPadding="false"
+            android:scaleType="centerCrop"
+            android:src="@drawable/chappie_backdrop" />
+    </RelativeLayout>
+
+    <com.learning.android.movieman.view.ObservableScrollView
+        android:id="@+id/scrollview_movie_details"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/layout_movie_details_header_holder"
+        android:clipToPadding="false"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/layout_movie_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/movie_title_placeholder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:paddingLeft="@dimen/abc_action_bar_default_padding_material"
+                    android:paddingRight="@dimen/abc_action_bar_default_padding_material">
+
+                    <TextView
+                        android:id="@+id/text_movie_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Movie Title"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/abc_text_size_title_material" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/abc_action_bar_subtitle_top_margin_material"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/abc_action_bar_default_padding_material"
+                android:paddingRight="@dimen/abc_action_bar_default_padding_material">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Overview"
+                    android:textColor="@android:color/secondary_text_light" />
+
+                <TextView
+                    android:id="@+id/text_movie_overview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy."
+                    android:textColor="@android:color/primary_text_light" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </com.learning.android.movieman.view.ObservableScrollView>
+
+</RelativeLayout>

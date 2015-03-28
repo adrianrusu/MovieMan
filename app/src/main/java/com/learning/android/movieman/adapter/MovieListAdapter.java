@@ -28,12 +28,10 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     private List<MovieSmall> movies = new ArrayList<>();
     private LayoutInflater layoutInflater;
 
-    private ImageLoader imageLoader;
     private RecyclerViewSelectionListener selectionListener;
 
     public MovieListAdapter(Context context) {
         layoutInflater = LayoutInflater.from(context);
-        imageLoader = Repository.getInstance().getImageLoader();
     }
 
     @Override
@@ -55,6 +53,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         if (movie.getPosterPath() != null) {
             StringBuilder posterUrl = new StringBuilder(UrlEndpoints.URL_API_IMAGES);
             posterUrl.append("w342").append(movie.getPosterPath());
+
+            ImageLoader imageLoader = Repository.getInstance().getImageLoader();
             imageLoader.get(posterUrl.toString(), new ImageLoader.ImageListener() {
                 @Override
                 public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {

@@ -1,5 +1,7 @@
 package com.learning.android.movieman.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -8,28 +10,33 @@ import java.util.List;
  * Created by adrianrusu on 3/21/15.
  */
 public class Movie extends MovieSmall {
+    @SerializedName("imdb_id")
     private String imdbId;
+    @SerializedName("original_title")
     private String originalTitle;
     private String language;
+    @SerializedName("original_name")
     private String originalLanguage;
+    @SerializedName("homepage")
     private String homepage;
     private List<Genre> genres;
+    @SerializedName("production_companie")
     private List<Company> productionCompanies;
     private String overview;
     private BigDecimal budget;
     private BigDecimal revenue;
     private Integer runtime;
     private String status;
-    private String tagLine;
+    private String tagline;
 
     public Movie() {
     }
 
     public Movie(Long id, String title, Date releaseDate, Double voteAverage, Integer voteCount, String posterPath,
-                 Double popularity, String imdbId, String originalTitle, String language, String originalLanguage,
-                 String homepage, List<Genre> genres, List<Company> productionCompanies, String overview, BigDecimal budget,
-                 BigDecimal revenue, Integer runtime, String status, String tagLine) {
-        super(id, title, releaseDate, voteAverage, voteCount, posterPath, popularity);
+                 String backdropPath, Double popularity, String imdbId, String originalTitle, String language,
+                 String originalLanguage, String homepage, List<Genre> genres, List<Company> productionCompanies,
+                 String overview, BigDecimal budget, BigDecimal revenue, Integer runtime, String status, String tagLine) {
+        super(id, title, releaseDate, voteAverage, voteCount, posterPath, backdropPath, popularity);
         this.imdbId = imdbId;
         this.originalTitle = originalTitle;
         this.language = language;
@@ -42,7 +49,7 @@ public class Movie extends MovieSmall {
         this.revenue = revenue;
         this.runtime = runtime;
         this.status = status;
-        this.tagLine = tagLine;
+        this.tagline = tagLine;
     }
 
     public String getImdbId() {
@@ -141,11 +148,11 @@ public class Movie extends MovieSmall {
         this.status = status;
     }
 
-    public String getTagLine() {
-        return tagLine;
+    public String getTagline() {
+        return tagline;
     }
 
-    public void setTagLine(String tagLine) {
-        this.tagLine = tagLine;
+    public void setTagline(String tagline) {
+        this.tagline = tagline;
     }
 }
