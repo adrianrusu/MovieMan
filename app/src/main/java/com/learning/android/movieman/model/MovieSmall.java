@@ -19,18 +19,21 @@ public class MovieSmall implements Serializable {
     private Integer voteCount;
     @SerializedName("poster_path")
     private String posterPath;
+    @SerializedName("backdrop_path")
+    private String backdropPath;
     private Double popularity;
 
     public MovieSmall() {
     }
 
-    public MovieSmall(Long id, String title, Date releaseDate, Double voteAverage, Integer voteCount, String posterPath, Double popularity) {
+    public MovieSmall(Long id, String title, Date releaseDate, Double voteAverage, Integer voteCount, String posterPath, String backdropPath, Double popularity) {
         this.id = id;
         this.title = title;
         this.releaseDate = releaseDate;
         this.voteAverage = voteAverage;
         this.voteCount = voteCount;
         this.posterPath = posterPath;
+        this.backdropPath = backdropPath;
         this.popularity = popularity;
     }
 
@@ -80,6 +83,14 @@ public class MovieSmall implements Serializable {
 
     public void setPosterPath(String posterPath) {
         this.posterPath = posterPath;
+    }
+
+    public String getBackdropPath() {
+        return backdropPath;
+    }
+
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
     }
 
     public Double getPopularity() {
