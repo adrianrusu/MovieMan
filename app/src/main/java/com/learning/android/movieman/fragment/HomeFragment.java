@@ -128,7 +128,11 @@ public class HomeFragment extends Fragment implements RecyclerViewSelectionListe
         Intent movieDetailsIntent = new Intent(getActivity(), MovieDetailsActivity.class);
         movieDetailsIntent.putExtra("id", movies.get(position).getId());
 
-        getMovieBackropAndPassToMovieActivity(movieDetailsIntent, position);
+        if (movies.get(position).getBackdropPath() != null) {
+            getMovieBackropAndPassToMovieActivity(movieDetailsIntent, position);
+        } else {
+            startActivity(movieDetailsIntent);
+        }
     }
 
     private void getMovieBackropAndPassToMovieActivity(final Intent intent, final int position) {
