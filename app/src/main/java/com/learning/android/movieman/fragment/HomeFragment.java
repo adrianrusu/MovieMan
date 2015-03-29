@@ -137,7 +137,7 @@ public class HomeFragment extends Fragment implements RecyclerViewSelectionListe
             @Override
             public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
                 Bitmap bitmap = response.getBitmap();
-                if (!isImmediate) {
+                if (!isImmediate || bitmap != null) {
                     if (bitmap != null) {
                         intent.putExtra("backdrop", bitmap);
                         getVibrantColorsAndPassToMovieActivity(intent, bitmap);
