@@ -32,7 +32,9 @@ public class JsonUtils {
 
         try {
             Gson gson = getGsonForApi();
-            result = gson.fromJson(jsonObject.get(JsonUtils.KEY_RESULTS).toString(), new TypeToken<List<MovieSmall>>() {
+
+            String jsonString = jsonObject.get(JsonUtils.KEY_RESULTS).toString().replaceAll("\\\"\\\"|\\\"null\"", "null");
+            result = gson.fromJson(jsonString, new TypeToken<List<MovieSmall>>() {
             }.getType());
         } catch (JSONException e) {
             System.out.println(e.getMessage());

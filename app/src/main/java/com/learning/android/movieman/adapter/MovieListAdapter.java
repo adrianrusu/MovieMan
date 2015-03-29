@@ -62,6 +62,14 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
                     Bitmap bitmap = response.getBitmap();
                     if (bitmap != null) {
                         viewHolderMovies.moviePoster.setImageBitmap(bitmap);
+                        viewHolderMovies.moviePoster.setVisibility(View.VISIBLE);
+                        viewHolderMovies.posterNotAvailable.setVisibility(View.GONE);
+
+                        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                                ViewGroup.LayoutParams.WRAP_CONTENT);
+
+                        p.addRule(RelativeLayout.BELOW, R.id.movie_list_poster);
+                        viewHolderMovies.movieTitle.setLayoutParams(p);
                     }
                 }
 
