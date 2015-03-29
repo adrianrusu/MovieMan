@@ -1,9 +1,9 @@
 package com.learning.android.movieman.activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.graphics.Palette;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -27,6 +27,10 @@ import org.json.JSONObject;
 public class MovieDetailsActivity extends ActionBarActivity {
 
     private Long movieId;
+    private Bitmap lowResBackdrop;
+    private int vibrantRgbColor;
+    private int vibrantTitleTextColor;
+
     private Movie movie;
 
     private ImageView imageBackdrop;
@@ -40,12 +44,26 @@ public class MovieDetailsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
 
-        movieId = getIntent().getExtras().getLong("id");
+        Intent intent = getIntent();
+        movieId = intent.getExtras().getLong("id");
+        if (intent.hasExtra("backdrop")) {
+            lowResBackdrop = intent.getParcelableExtra("backdrop");
+        }
+        if (intent.hasExtra("vibrantRgbColor")) {
+            vibrantRgbColor = intent.getExtras().getInt("vibrantRgbColor");
+            if (intent.hasExtra("vibrantTitleTextColor")) {
+                vibrantTitleTextColor = intent.getExtras().getInt("vibrantTitleTextColor");
+            }
+        }
 
         imageBackdrop = (ImageView) findViewById(R.id.image_movie_detail_header);
         titlePlaceHolder = (LinearLayout) findViewById(R.id.movie_title_placeholder);
         textTitle = (TextView) findViewById(R.id.text_movie_title);
         textOverview = (TextView) findViewById(R.id.text_movie_overview);
+
+        imageBackdrop.setImageBitmap(lowResBackdrop);
+        titlePlaceHolder.setBackgroundColor(vibrantRgbColor);
+        textTitle.setTextColor(vibrantTitleTextColor);
 
         sendApiRequest();
     }
@@ -104,8 +122,6 @@ public class MovieDetailsActivity extends ActionBarActivity {
     }
 
     private void sendApiBackdropRequest() {
-        System.out.println(getBackdropRequestUrl());
-
         ImageLoader imageLoader = Repository.getInstance().getImageLoader();
         imageLoader.get(getBackdropRequestUrl(), new ImageLoader.ImageListener() {
             @Override
@@ -113,7 +129,6 @@ public class MovieDetailsActivity extends ActionBarActivity {
                 Bitmap bitmap = response.getBitmap();
                 if (bitmap != null) {
                     imageBackdrop.setImageBitmap(bitmap);
-                    setTitlePlaceHolderColor(bitmap);
                 }
             }
 
@@ -124,25 +139,11 @@ public class MovieDetailsActivity extends ActionBarActivity {
         });
     }
 
-    private void setTitlePlaceHolderColor(Bitmap bitmap) {
-        Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
-
-            @Override
-            public void onGenerated(Palette palette) {
-                Palette.Swatch vibrant = palette.getVibrantSwatch();
-                if (vibrant != null) {
-                    titlePlaceHolder.setBackgroundColor(vibrant.getRgb());
-                    textTitle.setTextColor(vibrant.getTitleTextColor());
-                }
-            }
-        });
-    }
-
     private String getRequestUrl() {
         return UrlEndpoints.URL_API_HOME + "movie" + "/" + movieId.toString() + UrlEndpoints.URL_PARAM_API_KEY;
     }
 
     private String getBackdropRequestUrl() {
-        return UrlEndpoints.URL_API_IMAGES + "w1280" + movie.getBackdropPath();
+        return UrlEndpoints.URL_API_IMAGES + UrlEndpoints.URL_BACKDROP_LARGE + movie.getBackdropPath();
     }
 }

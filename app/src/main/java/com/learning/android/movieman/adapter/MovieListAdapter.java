@@ -1,6 +1,7 @@
 package com.learning.android.movieman.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -46,7 +47,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolderMovies viewHolderMovies, int i) {
+    public void onBindViewHolder(final ViewHolderMovies viewHolderMovies, final int i) {
         MovieSmall movie = movies.get(i);
         viewHolderMovies.movieTitle.setText(movie.getTitle());
 
@@ -58,7 +59,10 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
             imageLoader.get(posterUrl.toString(), new ImageLoader.ImageListener() {
                 @Override
                 public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-                    viewHolderMovies.moviePoster.setImageBitmap(response.getBitmap());
+                    Bitmap bitmap = response.getBitmap();
+                    if (bitmap != null) {
+                        viewHolderMovies.moviePoster.setImageBitmap(bitmap);
+                    }
                 }
 
                 @Override

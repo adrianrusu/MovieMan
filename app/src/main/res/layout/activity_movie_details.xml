@@ -17,6 +17,7 @@
             android:layout_centerVertical="true"
             android:layout_gravity="center"
             android:cropToPadding="false"
+            android:minHeight="240dp"
             android:scaleType="centerCrop"
             android:src="@drawable/chappie_backdrop" />
     </RelativeLayout>
