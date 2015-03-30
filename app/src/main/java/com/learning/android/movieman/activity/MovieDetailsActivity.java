@@ -103,7 +103,7 @@ public class MovieDetailsActivity extends ActionBarActivity implements Observabl
         float flexibleRange = flexibleSpaceImageHeight - actionBarSize;
         int minOverlayTransitionY = actionBarSize - overlayView.getHeight() + (int) getResources().getDimension(R.dimen.app_bar_top_padding);
         ViewHelper.setTranslationY(overlayView, ScrollUtils.getFloat(-scrollY, minOverlayTransitionY, 0));
-        ViewHelper.setTranslationY(imageBackdrop, ScrollUtils.getFloat(-scrollY, minOverlayTransitionY, 0));
+        ViewHelper.setTranslationY(imageBackdrop, ScrollUtils.getFloat(-scrollY / 2, minOverlayTransitionY, 0));
 
         // Change alpha of overlay
         ViewHelper.setAlpha(overlayView, ScrollUtils.getFloat((float) scrollY / flexibleRange, 0, 1));
