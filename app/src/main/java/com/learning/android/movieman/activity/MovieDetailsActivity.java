@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
@@ -27,6 +28,7 @@ import com.learning.android.movieman.model.Movie;
 import com.learning.android.movieman.util.JsonUtils;
 import com.learning.android.movieman.util.UrlEndpoints;
 import com.nineoldandroids.view.ViewHelper;
+import com.nineoldandroids.view.ViewPropertyAnimator;
 
 import org.json.JSONObject;
 
@@ -47,12 +49,13 @@ public class MovieDetailsActivity extends ActionBarActivity implements Observabl
     private ObservableScrollView scrollView;
     private TextView textTitle;
     private TextView textOverview;
+    private View fab;
 
     private int actionBarSize;
-    private int flexibleSpaceShowFabOffset;
     private int flexibleSpaceImageHeight;
-    private int fabMargin;
     private int toolbarColor;
+    private int fabMargin;
+    private boolean fabIsShown;
 
 
     @Override
@@ -70,6 +73,21 @@ public class MovieDetailsActivity extends ActionBarActivity implements Observabl
         scrollView.setScrollViewCallbacks(this);
         textTitle = (TextView) findViewById(R.id.text_movie_title);
         textOverview = (TextView) findViewById(R.id.text_movie_overview);
+        fab = findViewById(R.id.floating_actions_menu);
+        ((FloatingActionsMenu) fab).setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
+            @Override
+            public void onMenuExpanded() {
+                scrollView.smoothScrollTo(0, 0);
+            }
+
+            @Override
+            public void onMenuCollapsed() {
+
+            }
+        });
+        fabMargin = getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin);
+        ViewHelper.setScaleX(fab, 0);
+        ViewHelper.setScaleY(fab, 0);
 
         flexibleSpaceImageHeight = getResources().getDimensionPixelSize(R.dimen.flexible_space_image_height) - getResources().getDimensionPixelSize(R.dimen.app_bar_top_padding);
         actionBarSize = getActionBarSize();
@@ -127,6 +145,18 @@ public class MovieDetailsActivity extends ActionBarActivity implements Observabl
         } else {
             toolbar.setBackgroundColor(ScrollUtils.getColorWithAlpha(0, toolbarColor));
         }
+
+        // Translate FAB
+        float fabTranslationY = ScrollUtils.getFloat(-scrollY, minOverlayTransitionY, 0);
+        ViewHelper.setTranslationX(fab, overlayView.getWidth() - fabMargin - fab.getWidth());
+        ViewHelper.setTranslationY(fab, fabTranslationY);
+
+        // Show/hide FAB
+        if (Math.round(scale * 100) / 100d < 1 + MAX_TEXT_SCALE_DELTA) {
+            hideFab();
+        } else {
+            showFab();
+        }
     }
 
     @Override
@@ -161,6 +191,22 @@ public class MovieDetailsActivity extends ActionBarActivity implements Observabl
         int actionBarSize = a.getDimensionPixelSize(indexOfAttrTextSize, -1);
         a.recycle();
         return actionBarSize;
+    }
+
+    private void showFab() {
+        if (!fabIsShown) {
+            ViewPropertyAnimator.animate(fab).cancel();
+            ViewPropertyAnimator.animate(fab).scaleX(1).scaleY(1).setDuration(200).start();
+            fabIsShown = true;
+        }
+    }
+
+    private void hideFab() {
+        if (fabIsShown) {
+            ViewPropertyAnimator.animate(fab).cancel();
+            ViewPropertyAnimator.animate(fab).scaleX(0).scaleY(0).setDuration(200).start();
+            fabIsShown = false;
+        }
     }
 
     private void sendApiRequest() {
