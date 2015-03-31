@@ -6,10 +6,13 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -32,9 +35,14 @@ import com.nineoldandroids.view.ViewPropertyAnimator;
 
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.util.Calendar;
+
 public class MovieDetailsActivity extends ActionBarActivity implements ObservableScrollViewCallbacks {
 
     private static final float MAX_TEXT_SCALE_DELTA = 0.3f;
+    private static DecimalFormat df = new DecimalFormat("#,###,###,##0");
 
     private Long movieId;
     private Bitmap lowResBackdrop;
@@ -48,7 +56,13 @@ public class MovieDetailsActivity extends ActionBarActivity implements Observabl
     private View overlayView;
     private ObservableScrollView scrollView;
     private TextView textTitle;
+    private TextView textTagline;
+    private TextView textDuration;
+    private TextView textHomepage;
+    private TextView textBudget;
+    private TextView textRevenue;
     private TextView textOverview;
+    private TextView textGenres;
     private View fab;
 
     private int actionBarSize;
@@ -72,7 +86,13 @@ public class MovieDetailsActivity extends ActionBarActivity implements Observabl
         scrollView = (ObservableScrollView) findViewById(R.id.scrollview_movie_details);
         scrollView.setScrollViewCallbacks(this);
         textTitle = (TextView) findViewById(R.id.text_movie_title);
+        textTagline = (TextView) findViewById(R.id.text_movie_tagline);
+        textBudget = (TextView) findViewById(R.id.text_movie_budget);
+        textRevenue = (TextView) findViewById(R.id.text_movie_revenue);
+        textDuration = (TextView) findViewById(R.id.text_movie_duration);
+        textHomepage = (TextView) findViewById(R.id.text_movie_homepage);
         textOverview = (TextView) findViewById(R.id.text_movie_overview);
+        textGenres = (TextView) findViewById(R.id.text_movie_genres);
         fab = findViewById(R.id.floating_actions_menu);
         ((FloatingActionsMenu) fab).setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
             @Override
@@ -83,6 +103,18 @@ public class MovieDetailsActivity extends ActionBarActivity implements Observabl
             @Override
             public void onMenuCollapsed() {
 
+            }
+        });
+        findViewById(R.id.floating_action_fav).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MovieDetailsActivity.this, "Added to favourites", Toast.LENGTH_SHORT).show();
+            }
+        });
+        findViewById(R.id.floating_action_watch).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MovieDetailsActivity.this, "Added to watchlist", Toast.LENGTH_SHORT).show();
             }
         });
         fabMargin = getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin);
@@ -100,9 +132,9 @@ public class MovieDetailsActivity extends ActionBarActivity implements Observabl
             overlayView.setBackgroundColor(vibrantRgbColor);
             toolbarColor = vibrantRgbColor;
         }
-        if (vibrantTitleTextColor != 0) {
-            textTitle.setTextColor(vibrantTitleTextColor);
-        }
+//        if (vibrantTitleTextColor != 0) {
+//            textTitle.setTextColor(vibrantTitleTextColor);
+//        }
         setTitle(null);
 
         ScrollUtils.addOnGlobalLayoutListener(scrollView, new Runnable() {
@@ -235,14 +267,39 @@ public class MovieDetailsActivity extends ActionBarActivity implements Observabl
             if (movie.getBackdropPath() != null) {
                 sendApiBackdropRequest();
             }
-            textTitle.setText(movie.getTitle());
+            StringBuilder sb = new StringBuilder(movie.getTitle());
+            if (movie.getReleaseDate() != null) {
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(movie.getReleaseDate());
+                sb.append(" (").append(Integer.toString(cal.get(Calendar.YEAR))).append(")");
+            }
+            if (movie.getTagline() != null && !movie.getTagline().isEmpty()) {
+                textTagline.setText(movie.getTagline());
+            }
+            textTitle.setText(sb.toString());
+            if (movie.getRuntime() != null) {
+                textDuration.setText(movie.getRuntime().toString() + " min");
+            }
+            if (movie.getHomepage() != null && !movie.getHomepage().isEmpty()) {
+                textHomepage.setText(Html.fromHtml("<a href=\"" + movie.getHomepage() + "\">Homepage</a>"));
+                textHomepage.setMovementMethod(LinkMovementMethod.getInstance());
+            }
+            if (movie.getBudget() != null && movie.getBudget().compareTo(BigDecimal.ZERO) == 1) {
+                textBudget.setText("$" + df.format(movie.getBudget()));
+            }
+            if (movie.getRevenue() != null && movie.getRevenue().compareTo(BigDecimal.ZERO) == 1) {
+                textRevenue.setText("$" + df.format(movie.getRevenue()));
+            }
             textOverview.setText(movie.getOverview());
-            // just testing
-            StringBuilder sb = new StringBuilder(movie.getOverview());
-            for (int i = 0; i < 10; i++)
-                sb.append(movie.getOverview());
-            // end of just testing
-            textOverview.setText(sb.toString());
+            if (movie.getGenres() != null && !movie.getGenres().isEmpty()) {
+                sb = new StringBuilder();
+                for (int i = 0; i < movie.getGenres().size(); i++) {
+                    sb.append(movie.getGenres().get(i).getName());
+                    if (i != (movie.getGenres().size() - 1))
+                        sb.append(", ");
+                }
+                textGenres.setText(sb.toString());
+            }
         }
     }
 

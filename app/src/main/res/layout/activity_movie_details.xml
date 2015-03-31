@@ -45,15 +45,127 @@
                 android:paddingTop="@dimen/activity_vertical_margin">
 
                 <TextView
+                    android:id="@+id/text_movie_tagline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/activity_horizontal_margin"
+                    android:text="@string/not_available_placeholder"
+                    android:textSize="@dimen/abc_text_size_title_material" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/activity_horizontal_margin">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/movie_duration_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:text="Duration"
+                            android:textColor="@android:color/darker_gray" />
+
+                        <TextView
+                            android:id="@+id/text_movie_duration"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/movie_duration_label"
+                            android:paddingLeft="@dimen/activity_horizontal_margin"
+                            android:text="@string/not_available_placeholder" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true">
+
+                        <TextView
+                            android:id="@+id/text_movie_homepage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:paddingLeft="@dimen/activity_horizontal_margin" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/movie_budget_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:text="Budget"
+                            android:textColor="@android:color/darker_gray" />
+
+                        <TextView
+                            android:id="@+id/text_movie_budget"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/movie_duration_label"
+                            android:paddingLeft="@dimen/activity_horizontal_margin"
+                            android:text="@string/not_available_placeholder" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true">
+
+                        <TextView
+                            android:id="@+id/movie_revenue_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Revenue"
+                            android:textColor="@android:color/darker_gray" />
+
+                        <TextView
+                            android:id="@+id/text_movie_revenue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:paddingLeft="@dimen/activity_horizontal_margin"
+                            android:text="@string/not_available_placeholder" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/activity_horizontal_margin"
                     android:text="Overview"
                     android:textColor="@android:color/darker_gray" />
 
                 <TextView
                     android:id="@+id/text_movie_overview"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="@string/not_available_placeholder" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/activity_horizontal_margin"
+                    android:text="Genres"
+                    android:textColor="@android:color/darker_gray" />
+
+                <TextView
+                    android:id="@+id/text_movie_genres"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/not_available_placeholder" />
             </LinearLayout>
 
         </LinearLayout>
@@ -99,7 +211,8 @@
             android:layout_height="wrap_content"
             android:scaleType="center"
             app:fab_colorNormal="@color/accentColor"
-            app:fab_colorPressed="@color/primaryColorDark" />
+            app:fab_colorPressed="@color/primaryColorDark"
+            fab:fab_icon="@drawable/ic_theater" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/floating_action_fav"
@@ -107,7 +220,8 @@
             android:layout_height="wrap_content"
             android:scaleType="center"
             app:fab_colorNormal="@color/accentColor"
-            app:fab_colorPressed="@color/primaryColorDark" />
+            app:fab_colorPressed="@color/primaryColorDark"
+            fab:fab_icon="@drawable/ic_star" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 </FrameLayout>

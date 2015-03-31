@@ -18,4 +18,5 @@
     <string name="developed_by">Designed and developed by</string>
     <string name="developers">Adrian Rusu\nAlexandru Popescu\nLiviu Rusu</string>
     <string name="title_activity_movie">MovieActivity</string>
+    <string name="not_available_placeholder">NA</string>
 </resources>

@@ -2,6 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/primaryColor"
+    android:elevation="2dp"
     android:paddingTop="@dimen/app_bar_top_padding">
 
 </android.support.v7.widget.Toolbar>
