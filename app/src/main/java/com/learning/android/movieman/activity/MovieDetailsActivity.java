@@ -61,8 +61,10 @@ public class MovieDetailsActivity extends ActionBarActivity implements Observabl
     private TextView textHomepage;
     private TextView textBudget;
     private TextView textRevenue;
-    private TextView textOverview;
+    private TextView textStatus;
     private TextView textGenres;
+    private TextView textOverview;
+    private TextView textProductionCompanies;
     private View fab;
 
     private int actionBarSize;
@@ -81,6 +83,10 @@ public class MovieDetailsActivity extends ActionBarActivity implements Observabl
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
+
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         imageBackdrop = (ImageView) findViewById(R.id.image_movie_detail_header);
         overlayView = findViewById(R.id.overlay);
         scrollView = (ObservableScrollView) findViewById(R.id.scrollview_movie_details);
@@ -91,8 +97,10 @@ public class MovieDetailsActivity extends ActionBarActivity implements Observabl
         textRevenue = (TextView) findViewById(R.id.text_movie_revenue);
         textDuration = (TextView) findViewById(R.id.text_movie_duration);
         textHomepage = (TextView) findViewById(R.id.text_movie_homepage);
-        textOverview = (TextView) findViewById(R.id.text_movie_overview);
+        textStatus = (TextView) findViewById(R.id.text_movie_status);
         textGenres = (TextView) findViewById(R.id.text_movie_genres);
+        textOverview = (TextView) findViewById(R.id.text_movie_overview);
+        textProductionCompanies = (TextView) findViewById(R.id.text_production_companies);
         fab = findViewById(R.id.floating_actions_menu);
         ((FloatingActionsMenu) fab).setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
             @Override
@@ -290,7 +298,9 @@ public class MovieDetailsActivity extends ActionBarActivity implements Observabl
             if (movie.getRevenue() != null && movie.getRevenue().compareTo(BigDecimal.ZERO) == 1) {
                 textRevenue.setText("$" + df.format(movie.getRevenue()));
             }
-            textOverview.setText(movie.getOverview());
+            if (movie.getStatus() != null && !movie.getStatus().isEmpty()) {
+                textStatus.setText(movie.getStatus());
+            }
             if (movie.getGenres() != null && !movie.getGenres().isEmpty()) {
                 sb = new StringBuilder();
                 for (int i = 0; i < movie.getGenres().size(); i++) {
@@ -299,6 +309,17 @@ public class MovieDetailsActivity extends ActionBarActivity implements Observabl
                         sb.append(", ");
                 }
                 textGenres.setText(sb.toString());
+            }
+            textOverview.setText(movie.getOverview());
+            if (movie.getProductionCompanies() != null && !movie.getProductionCompanies().isEmpty()) {
+                sb = new StringBuilder();
+                for (int i = 0; i < movie.getProductionCompanies().size(); i++) {
+                    sb.append(movie.getProductionCompanies().get(i).getName());
+                    if (i != (movie.getProductionCompanies().size() - 1)) {
+                        sb.append(", ");
+                    }
+                }
+                textProductionCompanies.setText(sb.toString());
             }
         }
     }

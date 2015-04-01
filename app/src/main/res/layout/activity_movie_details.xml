@@ -49,7 +49,6 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:paddingTop="@dimen/activity_horizontal_margin"
-                    android:text="@string/not_available_placeholder"
                     android:textSize="@dimen/abc_text_size_title_material" />
 
                 <RelativeLayout
@@ -95,7 +94,8 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/activity_horizontal_margin">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -144,11 +144,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/activity_horizontal_margin"
-                    android:text="Overview"
+                    android:text="Status"
                     android:textColor="@android:color/darker_gray" />
 
                 <TextView
-                    android:id="@+id/text_movie_overview"
+                    android:id="@+id/text_movie_status"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/not_available_placeholder" />
@@ -162,6 +162,32 @@
 
                 <TextView
                     android:id="@+id/text_movie_genres"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/not_available_placeholder" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/activity_horizontal_margin"
+                    android:text="Overview"
+                    android:textColor="@android:color/darker_gray" />
+
+                <TextView
+                    android:id="@+id/text_movie_overview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/not_available_placeholder" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/activity_horizontal_margin"
+                    android:text="Production companies"
+                    android:textColor="@android:color/darker_gray" />
+
+                <TextView
+                    android:id="@+id/text_production_companies"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/not_available_placeholder" />

@@ -20,8 +20,8 @@ public class Movie extends MovieSmall {
     @SerializedName("homepage")
     private String homepage;
     private List<Genre> genres;
-    @SerializedName("production_companie")
-    private List<Company> productionCompanies;
+    @SerializedName("production_companies")
+    private List<ProductionCompany> productionCompanies;
     private String overview;
     private BigDecimal budget;
     private BigDecimal revenue;
@@ -34,7 +34,7 @@ public class Movie extends MovieSmall {
 
     public Movie(Long id, String title, Date releaseDate, Double voteAverage, Integer voteCount, String posterPath,
                  String backdropPath, Double popularity, String imdbId, String originalTitle, String language,
-                 String originalLanguage, String homepage, List<Genre> genres, List<Company> productionCompanies,
+                 String originalLanguage, String homepage, List<Genre> genres, List<ProductionCompany> productionCompanies,
                  String overview, BigDecimal budget, BigDecimal revenue, Integer runtime, String status, String tagLine) {
         super(id, title, releaseDate, voteAverage, voteCount, posterPath, backdropPath, popularity);
         this.imdbId = imdbId;
@@ -100,11 +100,11 @@ public class Movie extends MovieSmall {
         this.genres = genres;
     }
 
-    public List<Company> getProductionCompanies() {
+    public List<ProductionCompany> getProductionCompanies() {
         return productionCompanies;
     }
 
-    public void setProductionCompanies(List<Company> productionCompanies) {
+    public void setProductionCompanies(List<ProductionCompany> productionCompanies) {
         this.productionCompanies = productionCompanies;
     }
 

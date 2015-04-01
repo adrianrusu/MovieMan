@@ -13,10 +13,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.learning.android.movieman.R;
 import com.learning.android.movieman.activity.AboutActivity;
+import com.learning.android.movieman.activity.MainActivity;
 import com.learning.android.movieman.adapter.NavbarRecyclerAdapter;
 import com.learning.android.movieman.adapter.RecyclerViewSelectionListener;
 
@@ -28,8 +28,8 @@ public class NavigationDrawerFragment extends Fragment implements RecyclerViewSe
     private String[] titles = {"Home", "Watchlist", "Favorites", "About"};
     private int[] icons = {R.drawable.ic_home, R.drawable.ic_theater, R.drawable.ic_star, R.drawable.ic_xml};
 
-    private NavbarRecyclerAdapter adapter;
     private ActionBarDrawerToggle drawerToggle;
+    private DrawerLayout drawerLayout;
     private boolean userLearnedDrawer;
     private boolean fromSavedInstanceState;
 
@@ -58,7 +58,8 @@ public class NavigationDrawerFragment extends Fragment implements RecyclerViewSe
         }
     }
 
-    public void setUp(DrawerLayout drawerLayout, Toolbar toolbar, int fragmentId) {
+    public void setUp(DrawerLayout layout, Toolbar toolbar, int fragmentId) {
+        drawerLayout = layout;
         drawerToggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_closed) {
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -99,7 +100,7 @@ public class NavigationDrawerFragment extends Fragment implements RecyclerViewSe
         RecyclerView recyclerView = (RecyclerView) layout.findViewById(R.id.navdrawer_recycler);
         recyclerView.setHasFixedSize(true);
 
-        adapter = new NavbarRecyclerAdapter(titles, icons, layout.getContext());
+        NavbarRecyclerAdapter adapter = new NavbarRecyclerAdapter(titles, icons, layout.getContext());
         adapter.setSelectionListener(this);
 
         recyclerView.setAdapter(adapter);
@@ -110,8 +111,16 @@ public class NavigationDrawerFragment extends Fragment implements RecyclerViewSe
 
     @Override
     public void itemClicked(View view, int position) {
-        Toast.makeText(view.getContext(), "Item " + position + " clicked", Toast.LENGTH_SHORT).show();
-        if (position == 4)
-            startActivity(new Intent(getActivity(), AboutActivity.class));
+        Intent intent = null;
+        if (position == 1 && !getActivity().getClass().equals(MainActivity.class)) {
+            intent = new Intent(getActivity(), MainActivity.class);
+        } else if (position == 4 && !getActivity().getClass().equals(AboutActivity.class)) {
+            intent = new Intent(getActivity(), AboutActivity.class);
+        }
+        if (intent != null) {
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            drawerLayout.closeDrawers();
+            startActivity(intent);
+        }
     }
 }
