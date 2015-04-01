@@ -7,8 +7,7 @@
         android:id="@+id/image_movie_detail_header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/flexible_space_image_height"
-        android:scaleType="centerCrop"
-        android:src="@drawable/chappie_backdrop" />
+        android:scaleType="centerCrop" />
 
     <View
         android:id="@+id/overlay"
