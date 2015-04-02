@@ -8,4 +8,5 @@
     <color name="secondaryText">#727272</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
+    <color name="colorGeneralBackground">@color/background_material_light</color>
 </resources>
