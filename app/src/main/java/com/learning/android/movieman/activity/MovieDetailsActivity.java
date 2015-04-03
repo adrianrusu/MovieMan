@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -27,6 +28,7 @@ import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.learning.android.movieman.R;
 import com.learning.android.movieman.backend.Repository;
+import com.learning.android.movieman.fragment.NavigationDrawerFragment;
 import com.learning.android.movieman.model.Movie;
 import com.learning.android.movieman.util.JsonUtils;
 import com.learning.android.movieman.util.UrlEndpoints;
@@ -79,13 +81,16 @@ public class MovieDetailsActivity extends ActionBarActivity implements Observabl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
 
-        getIntentExtras();
-
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        final NavigationDrawerFragment navDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
+        navDrawerFragment.setUp((DrawerLayout) findViewById(R.id.drawer_layout), toolbar, R.id.fragment_navigation_drawer);
+
+        getIntentExtras();
 
         imageBackdrop = (ImageView) findViewById(R.id.image_movie_detail_header);
         overlayView = findViewById(R.id.overlay);

@@ -74,7 +74,6 @@
 
     </RelativeLayout>
 
-
     <fragment
         android:id="@+id/fragment_navigation_drawer"
         android:name="com.learning.android.movieman.fragment.NavigationDrawerFragment"

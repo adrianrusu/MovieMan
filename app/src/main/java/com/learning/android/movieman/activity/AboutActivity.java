@@ -26,7 +26,6 @@ public class AboutActivity extends ActionBarActivity {
 
         getSupportActionBar().setHomeButtonEnabled(true);
 
-
         final NavigationDrawerFragment navDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         navDrawerFragment.setUp((DrawerLayout) findViewById(R.id.drawer_layout), toolbar, R.id.fragment_navigation_drawer);
 
