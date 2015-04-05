@@ -26,7 +26,7 @@ public class NavigationDrawerFragment extends Fragment implements RecyclerViewSe
     private static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
 
     private String[] titles = {"Home", "Watchlist", "Favorites", "About"};
-    private int[] icons = {R.drawable.ic_home, R.drawable.ic_theater, R.drawable.ic_star, R.drawable.ic_xml};
+    private int[] icons = {R.drawable.ic_home_grey600_36dp, R.drawable.ic_theater_grey600_36dp, R.drawable.ic_star_grey600_36dp, R.drawable.ic_xml_grey600_36dp};
 
     private ActionBarDrawerToggle drawerToggle;
     private DrawerLayout drawerLayout;

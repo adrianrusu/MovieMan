@@ -4,12 +4,13 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.TypedValue;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,7 +29,6 @@ import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.learning.android.movieman.R;
 import com.learning.android.movieman.backend.Repository;
-import com.learning.android.movieman.fragment.NavigationDrawerFragment;
 import com.learning.android.movieman.model.Movie;
 import com.learning.android.movieman.util.JsonUtils;
 import com.learning.android.movieman.util.UrlEndpoints;
@@ -43,10 +43,12 @@ import java.util.Calendar;
 
 public class MovieDetailsActivity extends ActionBarActivity implements ObservableScrollViewCallbacks {
 
+    public static final int SOURCE_MAIN_ACTIVITY = 1;
+    public static final int SOURCE_SEARCH_ACTIVITY = 2;
     private static final float MAX_TEXT_SCALE_DELTA = 0.3f;
     private static DecimalFormat df = new DecimalFormat("#,###,###,##0");
-
     private Long movieId;
+    private int source;
     private Bitmap lowResBackdrop;
     private int vibrantRgbColor;
     private int vibrantTitleTextColor;
@@ -75,7 +77,6 @@ public class MovieDetailsActivity extends ActionBarActivity implements Observabl
     private int fabMargin;
     private boolean fabIsShown;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,12 +84,8 @@ public class MovieDetailsActivity extends ActionBarActivity implements Observabl
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        final NavigationDrawerFragment navDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
-        navDrawerFragment.setUp((DrawerLayout) findViewById(R.id.drawer_layout), toolbar, R.id.fragment_navigation_drawer);
 
         getIntentExtras();
 
@@ -214,6 +211,22 @@ public class MovieDetailsActivity extends ActionBarActivity implements Observabl
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if (source == SOURCE_SEARCH_ACTIVITY) {
+                    Intent intent = new Intent(this, SearchActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    NavUtils.navigateUpTo(this, intent);
+                } else {
+                    NavUtils.navigateUpFromSameTask(this);
+                }
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void getIntentExtras() {
         Intent intent = getIntent();
         movieId = intent.getExtras().getLong("id");
@@ -225,6 +238,9 @@ public class MovieDetailsActivity extends ActionBarActivity implements Observabl
             if (intent.hasExtra("vibrantTitleTextColor")) {
                 vibrantTitleTextColor = intent.getExtras().getInt("vibrantTitleTextColor");
             }
+        }
+        if (intent.hasExtra("source")) {
+            source = intent.getExtras().getInt("source");
         }
     }
 

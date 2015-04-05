@@ -243,7 +243,7 @@
                 android:scaleType="center"
                 app:fab_colorNormal="@color/accentColor"
                 app:fab_colorPressed="@color/primaryColorDark"
-                fab:fab_icon="@drawable/ic_theater" />
+                fab:fab_icon="@drawable/ic_theater_white_36dp" />
 
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:id="@+id/floating_action_fav"
@@ -252,7 +252,7 @@
                 android:scaleType="center"
                 app:fab_colorNormal="@color/accentColor"
                 app:fab_colorPressed="@color/primaryColorDark"
-                fab:fab_icon="@drawable/ic_star" />
+                fab:fab_icon="@drawable/ic_star_white_36dp" />
 
         </com.getbase.floatingactionbutton.FloatingActionsMenu>
     </FrameLayout>

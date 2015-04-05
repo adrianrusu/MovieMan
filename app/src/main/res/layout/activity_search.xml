@@ -8,19 +8,18 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.learning.android.movieman.activity.MainActivity">
+        tools:context="com.learning.android.movieman.activity.SearchActivity">
 
         <include
             android:id="@+id/app_bar"
             layout="@layout/app_bar" />
 
         <fragment
-            android:id="@+id/fragment_home"
-            android:name="com.learning.android.movieman.fragment.HomeFragment"
+            android:id="@+id/fragment_search"
+            android:name="com.learning.android.movieman.fragment.SearchFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/app_bar"
-            tools:layout="@layout/fragment_grid_card" />
+            android:layout_below="@id/app_bar" />
 
     </RelativeLayout>
 
