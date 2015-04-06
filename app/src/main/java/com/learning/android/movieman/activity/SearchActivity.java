@@ -20,7 +20,7 @@ public class SearchActivity extends ActionBarActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-//        handleIntent(getIntent());
+        handleIntent(getIntent());
     }
 
     @Override

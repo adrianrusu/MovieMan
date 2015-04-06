@@ -18,4 +18,5 @@ public class UrlEndpoints {
     public static final String URL_POSTER_SMALL = "w154";
     public static final String URL_POSTER_MEDIUM = "w342";
     public static final String URL_POSTER_LARGE = "w780";
+    public static final String URL_PARAM_SEARCH_TYPE_AUTOCOMPLETE = "&search_type=ngram";
 }

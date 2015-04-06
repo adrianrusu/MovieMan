@@ -85,7 +85,7 @@ public abstract class MoviesGridFragment extends Fragment implements RecyclerVie
         outState.putSerializable(MOVIES_LIST, (java.io.Serializable) movies);
     }
 
-    private void sendApiRequest() {
+    protected void sendApiRequest() {
         RequestQueue requestQueue = Repository.getInstance().getRequestQueue();
 
         if (getRequestUrl() != null) {
@@ -104,13 +104,18 @@ public abstract class MoviesGridFragment extends Fragment implements RecyclerVie
         }
     }
 
-    private void handleResponse(JSONObject response) {
+    protected void handleResponse(JSONObject response) {
         textViewError.setVisibility(View.GONE);
         movies = JsonUtils.parseMovieSmallListJsonResponse(response);
-        movieListAdapter.setElements(movies);
+        if (movies.isEmpty()) {
+            textViewError.setVisibility(View.VISIBLE);
+            textViewError.setText(R.string.error_no_result);
+        } else {
+            movieListAdapter.setElements(movies);
+        }
     }
 
-    private void handleError(VolleyError error) {
+    protected void handleError(VolleyError error) {
         textViewError.setVisibility(View.VISIBLE);
         if (error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
             textViewError.setText(R.string.error_timeout);

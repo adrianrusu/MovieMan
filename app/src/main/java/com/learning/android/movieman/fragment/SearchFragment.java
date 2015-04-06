@@ -10,6 +10,7 @@ public class SearchFragment extends MoviesGridFragment {
     private static final String ARG_QUERY = "query";
 
     private String query;
+    private boolean matchModePhrase = true;
 
     public static SearchFragment newInstance(String param1) {
         SearchFragment fragment = new SearchFragment();
@@ -30,7 +31,7 @@ public class SearchFragment extends MoviesGridFragment {
     @Override
     protected String getRequestUrl() {
         if (query != null) {
-            return UrlEndpoints.URL_API_SEARCH + query;
+            return UrlEndpoints.URL_API_SEARCH + query + UrlEndpoints.URL_PARAM_SEARCH_TYPE_AUTOCOMPLETE;
         }
         return null;
     }
@@ -39,5 +40,4 @@ public class SearchFragment extends MoviesGridFragment {
     protected int getSourcePropertyClass() {
         return MovieDetailsActivity.SOURCE_SEARCH_ACTIVITY;
     }
-
 }

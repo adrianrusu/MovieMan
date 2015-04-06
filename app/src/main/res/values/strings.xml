@@ -12,6 +12,7 @@
     <string name="error_auth_failure">Oops! Api authentication failure</string>
     <string name="error_network">Oops! Api error</string>
     <string name="error_parser">Oops! Could not parse response</string>
+    <string name="error_no_result">Oops! No result was found for requested query</string>
     <string name="poster_not_available">Poster is not available</string>
     <string name="action_refresh">Refresh</string>
     <string name="app_version">Version:</string>
