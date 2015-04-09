@@ -52,7 +52,7 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity
-            android:name=".activity.MovieDetailsTestActivity"
+            android:name=".activity.MovieDetailsBaseActivity"
             android:label="@string/title_activity_movie_details_test"></activity>
     </application>
 

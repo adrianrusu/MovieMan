@@ -31,18 +31,13 @@ public class NavbarRecyclerAdapter extends RecyclerView.Adapter<NavbarRecyclerAd
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_ITEM) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.drawer_item, parent, false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_drawer_item, parent, false);
 
-            ViewHolder vhItem = new ViewHolder(v, viewType, context);
-
-            return vhItem;
+            return new ViewHolder(v, viewType, context);
         } else if (viewType == TYPE_HEADER) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_drawer_header, parent, false);
 
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.drawer_header, parent, false);
-
-            ViewHolder vhHeader = new ViewHolder(v, viewType, context);
-
-            return vhHeader;
+            return new ViewHolder(v, viewType, context);
         }
         return null;
     }

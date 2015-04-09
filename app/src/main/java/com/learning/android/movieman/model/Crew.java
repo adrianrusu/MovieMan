@@ -2,34 +2,26 @@ package com.learning.android.movieman.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
 /**
- * Created by adrianrusu on 3/21/15.
+ * Created by adrianrusu on 4/6/15.
  */
-public class Cast implements Serializable {
+public class Crew {
 
     private Long id;
-    @SerializedName("cast_id")
-    private Long castId;
     @SerializedName("credit_id")
     private String creditId;
     private String name;
-    private String character;
-    private int order;
+    private String job;
+    private String department;
     @SerializedName("profile_path")
     private String profilePath;
 
-    public Cast() {
-    }
-
-    public Cast(Long id, Long castId, String creditId, String name, String character, int order, String profilePath) {
+    public Crew(Long id, String creditId, String name, String job, String department, String profilePath) {
         this.id = id;
-        this.castId = castId;
         this.creditId = creditId;
         this.name = name;
-        this.character = character;
-        this.order = order;
+        this.job = job;
+        this.department = department;
         this.profilePath = profilePath;
     }
 
@@ -39,14 +31,6 @@ public class Cast implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getCastId() {
-        return castId;
-    }
-
-    public void setCastId(Long castId) {
-        this.castId = castId;
     }
 
     public String getCreditId() {
@@ -65,20 +49,20 @@ public class Cast implements Serializable {
         this.name = name;
     }
 
-    public String getCharacter() {
-        return character;
+    public String getJob() {
+        return job;
     }
 
-    public void setCharacter(String character) {
-        this.character = character;
+    public void setJob(String job) {
+        this.job = job;
     }
 
-    public int getOrder() {
-        return order;
+    public String getDepartment() {
+        return department;
     }
 
-    public void setOrder(int order) {
-        this.order = order;
+    public void setDepartment(String department) {
+        this.department = department;
     }
 
     public String getProfilePath() {

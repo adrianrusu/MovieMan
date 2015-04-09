@@ -28,14 +28,9 @@ public class Movie extends MovieSmall {
     private Integer runtime;
     private String status;
     private String tagline;
+    private MovieCredit credits;
 
-    public Movie() {
-    }
-
-    public Movie(Long id, String title, Date releaseDate, Double voteAverage, Integer voteCount, String posterPath,
-                 String backdropPath, Double popularity, String imdbId, String originalTitle, String language,
-                 String originalLanguage, String homepage, List<Genre> genres, List<ProductionCompany> productionCompanies,
-                 String overview, BigDecimal budget, BigDecimal revenue, Integer runtime, String status, String tagLine) {
+    public Movie(Long id, String title, Date releaseDate, Double voteAverage, Integer voteCount, String posterPath, String backdropPath, Double popularity, String imdbId, String originalTitle, String language, String originalLanguage, String homepage, List<Genre> genres, List<ProductionCompany> productionCompanies, String overview, BigDecimal budget, BigDecimal revenue, Integer runtime, String status, String tagline, MovieCredit credits) {
         super(id, title, releaseDate, voteAverage, voteCount, posterPath, backdropPath, popularity);
         this.imdbId = imdbId;
         this.originalTitle = originalTitle;
@@ -49,7 +44,8 @@ public class Movie extends MovieSmall {
         this.revenue = revenue;
         this.runtime = runtime;
         this.status = status;
-        this.tagline = tagLine;
+        this.tagline = tagline;
+        this.credits = credits;
     }
 
     public String getImdbId() {
@@ -154,5 +150,13 @@ public class Movie extends MovieSmall {
 
     public void setTagline(String tagline) {
         this.tagline = tagline;
+    }
+
+    public MovieCredit getCredits() {
+        return credits;
+    }
+
+    public void setCredits(MovieCredit credits) {
+        this.credits = credits;
     }
 }

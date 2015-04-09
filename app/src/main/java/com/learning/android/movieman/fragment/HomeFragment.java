@@ -8,7 +8,7 @@ public class HomeFragment extends MoviesGridFragment {
 
     @Override
     protected String getRequestUrl() {
-        return UrlEndpoints.URL_NOW_PLAYING;
+        return UrlEndpoints.URL_API_NOW_PLAYING;
     }
 
     @Override

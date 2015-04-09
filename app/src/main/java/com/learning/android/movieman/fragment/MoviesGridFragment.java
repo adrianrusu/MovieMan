@@ -45,7 +45,6 @@ public abstract class MoviesGridFragment extends Fragment implements RecyclerVie
 
     private static final String MOVIES_LIST = "movies_list";
 
-    private RecyclerView moviesRecyclerView;
     private MovieListAdapter movieListAdapter;
     private TextView textViewError;
 
@@ -61,7 +60,7 @@ public abstract class MoviesGridFragment extends Fragment implements RecyclerVie
         View view = inflater.inflate(R.layout.fragment_grid_card, container, false);
 
         textViewError = (TextView) view.findViewById(R.id.text_error);
-        moviesRecyclerView = (RecyclerView) view.findViewById(R.id.home_movies_list);
+        RecyclerView moviesRecyclerView = (RecyclerView) view.findViewById(R.id.home_movies_list);
 
         moviesRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         movieListAdapter = new MovieListAdapter(getActivity());

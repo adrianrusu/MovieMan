@@ -37,13 +37,12 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     @Override
     public ViewHolderMovies onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = layoutInflater.inflate(R.layout.home_movie_item, viewGroup, false);
+        View view = layoutInflater.inflate(R.layout.recycler_movie_item, viewGroup, false);
 
         CardView cardView = (CardView) view.findViewById(R.id.home_movie_card_view);
         cardView.setPreventCornerOverlap(false);
 
-        ViewHolderMovies viewHolder = new ViewHolderMovies(view);
-        return viewHolder;
+        return new ViewHolderMovies(view);
     }
 
     @Override
@@ -53,7 +52,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
         if (movie.getPosterPath() != null) {
             StringBuilder posterUrl = new StringBuilder(UrlEndpoints.URL_API_IMAGES);
-            posterUrl.append("w342").append(movie.getPosterPath());
+            posterUrl.append(UrlEndpoints.URL_POSTER_MEDIUM).append(movie.getPosterPath());
 
             ImageLoader imageLoader = Repository.getInstance().getImageLoader();
             imageLoader.get(posterUrl.toString(), new ImageLoader.ImageListener() {
@@ -94,7 +93,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     public int getItemCount() {
         return movies.size();
     }
-
 
     public void setElements(List<MovieSmall> elements) {
         this.movies = elements;

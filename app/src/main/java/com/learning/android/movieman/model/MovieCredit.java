@@ -6,23 +6,15 @@ import java.util.List;
  * Created by adrianrusu on 3/21/15.
  */
 public class MovieCredit {
-    private Long id;
     private List<Cast> cast;
+    private List<Crew> crew;
 
     public MovieCredit() {
     }
 
-    public MovieCredit(Long id, List<Cast> cast) {
-        this.id = id;
+    public MovieCredit(List<Cast> cast, List<Crew> crew) {
         this.cast = cast;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        this.crew = crew;
     }
 
     public List<Cast> getCast() {
@@ -31,5 +23,13 @@ public class MovieCredit {
 
     public void setCast(List<Cast> cast) {
         this.cast = cast;
+    }
+
+    public List<Crew> getCrew() {
+        return crew;
+    }
+
+    public void setCrew(List<Crew> crew) {
+        this.crew = crew;
     }
 }

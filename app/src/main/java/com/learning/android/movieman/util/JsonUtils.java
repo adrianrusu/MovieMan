@@ -18,7 +18,7 @@ import java.util.List;
 public class JsonUtils {
     public static final String KEY_RESULTS = "results";
 
-    public static final Gson getGsonForApi() {
+    public static Gson getGsonForApi() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setDateFormat("yyyy-MM-dd");
         return gsonBuilder.create();
