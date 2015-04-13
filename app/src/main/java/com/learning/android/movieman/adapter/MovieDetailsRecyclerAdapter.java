@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * Created by adrianrusu on 4/6/15.
  */
-public class MovieCastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MovieDetailsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int VIEW_TYPE_HEADER = 0;
     private static final int VIEW_TYPE_ITEM = 1;
 
@@ -29,11 +29,11 @@ public class MovieCastRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
     private View headerView;
     private LayoutInflater layoutInflater;
 
-    public MovieCastRecyclerAdapter(Context context) {
+    public MovieDetailsRecyclerAdapter(Context context) {
         layoutInflater = LayoutInflater.from(context);
     }
 
-    public MovieCastRecyclerAdapter(Context context, View headerView) {
+    public MovieDetailsRecyclerAdapter(Context context, View headerView) {
         this.headerView = headerView;
         layoutInflater = LayoutInflater.from(context);
     }

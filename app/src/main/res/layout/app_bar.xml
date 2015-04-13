@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/primaryColor"
-    android:elevation="8dp"
+    android:elevation="@dimen/toolbar_elevation"
     android:paddingTop="@dimen/app_bar_top_padding"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 

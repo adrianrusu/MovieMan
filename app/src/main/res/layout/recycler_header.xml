@@ -195,4 +195,5 @@
         android:paddingTop="@dimen/material_default_spacing"
         android:text="Cast"
         android:textColor="@android:color/darker_gray" />
+
 </LinearLayout>

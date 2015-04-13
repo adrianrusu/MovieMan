@@ -26,14 +26,14 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCal
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.learning.android.movieman.R;
-import com.learning.android.movieman.adapter.MovieCastRecyclerAdapter;
+import com.learning.android.movieman.adapter.MovieDetailsRecyclerAdapter;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 
 public class MovieDetailsBaseActivity extends ActionBarActivity implements ObservableScrollViewCallbacks {
     private static final float MAX_TEXT_SCALE_DELTA = 0.3f;
 
-    protected MovieCastRecyclerAdapter castAdapter;
+    protected MovieDetailsRecyclerAdapter movieDetailsAdapter;
     private Toolbar toolbar;
     private View imageBackdrop;
     private View overlayView;
@@ -76,8 +76,8 @@ public class MovieDetailsBaseActivity extends ActionBarActivity implements Obser
         headerLinearLayout.addView(headerView);
         headerLinearLayout.addView(detailsView);
 
-        castAdapter = new MovieCastRecyclerAdapter(this, headerLinearLayout);
-        recyclerView.setAdapter(castAdapter);
+        movieDetailsAdapter = new MovieDetailsRecyclerAdapter(this, headerLinearLayout);
+        recyclerView.setAdapter(movieDetailsAdapter);
 
         toolbar.setBackgroundColor(Color.TRANSPARENT);
 
@@ -88,21 +88,15 @@ public class MovieDetailsBaseActivity extends ActionBarActivity implements Obser
         textTitle.setText(getTitle());
         setTitle(null);
 
-        // recyclerViewBackground makes RecyclerView's background except header view.
         recyclerViewBackground = findViewById(R.id.list_background);
         final View contentView = getWindow().getDecorView().findViewById(android.R.id.content);
         contentView.post(new Runnable() {
             @Override
             public void run() {
-                // mRecylcerViewBackground's should fill its parent vertically
-                // but the height of the content view is 0 on 'onCreate'.
-                // So we should get it with post().
                 recyclerViewBackground.getLayoutParams().height = contentView.getHeight();
             }
         });
 
-        //since you cannot programatically add a headerview to a recyclerview we added an empty view as the header
-        // in the castAdapter and then are shifting the views OnCreateView to compensate
         final float scale = 1 + MAX_TEXT_SCALE_DELTA;
         recyclerViewBackground.post(new Runnable() {
             @Override
@@ -171,7 +165,6 @@ public class MovieDetailsBaseActivity extends ActionBarActivity implements Obser
 
     @Override
     public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-
         // Translate overlay and image
         float flexibleRange = flexibleSpaceImageHeight - actionBarSize;
         int minOverlayTransitionY = actionBarSize - overlayView.getHeight();
@@ -194,9 +187,8 @@ public class MovieDetailsBaseActivity extends ActionBarActivity implements Obser
         // Translate title text
         int maxTitleTranslationY = (int) (flexibleSpaceImageHeight - textTitle.getHeight() * scale);
         int titleTranslationY = maxTitleTranslationY - scrollY;
-        titleTranslationY = Math.max(0, titleTranslationY);
+        titleTranslationY = Math.max(getResources().getDimensionPixelSize(R.dimen.app_bar_top_padding), titleTranslationY);
         ViewHelper.setTranslationY(textTitle, titleTranslationY);
-
 
         // Change alpha of toolbar background
         if (-scrollY + flexibleSpaceImageHeight <= actionBarSize) {

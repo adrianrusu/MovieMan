@@ -60,7 +60,7 @@ public class MovieDetailsActivity extends MovieDetailsBaseActivity {
 
         getIntentExtras();
 
-        View adapterHeader = castAdapter.getHeaderView();
+        View adapterHeader = movieDetailsAdapter.getHeaderView();
         textTagline = (TextView) adapterHeader.findViewById(R.id.text_movie_tagline);
         textBudget = (TextView) adapterHeader.findViewById(R.id.text_movie_budget);
         textRevenue = (TextView) adapterHeader.findViewById(R.id.text_movie_revenue);
@@ -205,7 +205,7 @@ public class MovieDetailsActivity extends MovieDetailsBaseActivity {
                 textProductionCompanies.setText(sb.toString());
             }
             if (movie.getCredits() != null && !movie.getCredits().getCast().isEmpty()) {
-                castAdapter.setCastList(movie.getCredits().getCast());
+                movieDetailsAdapter.setCastList(movie.getCredits().getCast());
             }
         }
     }
