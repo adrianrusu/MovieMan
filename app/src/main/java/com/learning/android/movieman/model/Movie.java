@@ -29,8 +29,9 @@ public class Movie extends MovieSmall {
     private String status;
     private String tagline;
     private MovieCredit credits;
+    private Trailer trailers;
 
-    public Movie(Long id, String title, Date releaseDate, Double voteAverage, Integer voteCount, String posterPath, String backdropPath, Double popularity, String imdbId, String originalTitle, String language, String originalLanguage, String homepage, List<Genre> genres, List<ProductionCompany> productionCompanies, String overview, BigDecimal budget, BigDecimal revenue, Integer runtime, String status, String tagline, MovieCredit credits) {
+    public Movie(Long id, String title, Date releaseDate, Double voteAverage, Integer voteCount, String posterPath, String backdropPath, Double popularity, String imdbId, String originalTitle, String language, String originalLanguage, String homepage, List<Genre> genres, List<ProductionCompany> productionCompanies, String overview, BigDecimal budget, BigDecimal revenue, Integer runtime, String status, String tagline, MovieCredit credits, Trailer trailers) {
         super(id, title, releaseDate, voteAverage, voteCount, posterPath, backdropPath, popularity);
         this.imdbId = imdbId;
         this.originalTitle = originalTitle;
@@ -46,6 +47,7 @@ public class Movie extends MovieSmall {
         this.status = status;
         this.tagline = tagline;
         this.credits = credits;
+        this.trailers = trailers;
     }
 
     public String getImdbId() {
@@ -158,5 +160,13 @@ public class Movie extends MovieSmall {
 
     public void setCredits(MovieCredit credits) {
         this.credits = credits;
+    }
+
+    public Trailer getTrailers() {
+        return trailers;
+    }
+
+    public void setTrailers(Trailer trailers) {
+        this.trailers = trailers;
     }
 }

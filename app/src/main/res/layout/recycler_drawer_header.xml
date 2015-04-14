@@ -38,12 +38,4 @@
 
             />
     </LinearLayout>
-
-    <!--<de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/circleView"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="38dp"
-        android:src="@drawable/aka" />-->
 </RelativeLayout>

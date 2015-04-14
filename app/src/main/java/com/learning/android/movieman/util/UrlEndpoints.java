@@ -9,7 +9,7 @@ public class UrlEndpoints {
     public static final String URL_PARAM_API_KEY = "?api_key=" + MovieManApplication.API_KEY;
     public static final String URL_PARAM_QUERY = "&query=";
     public static final String URL_PARAM_SEARCH_TYPE_AUTOCOMPLETE = "&search_type=ngram";
-    public static final String URL_PARAM_APPEND = "&append_to_response=credits";
+    public static final String URL_PARAM_APPEND = "&append_to_response=credits,trailers";
 
     public static final String URL_API_HOME = "http://api.themoviedb.org/3/";
     public static final String URL_API_MOVIE = URL_API_HOME + "movie/";

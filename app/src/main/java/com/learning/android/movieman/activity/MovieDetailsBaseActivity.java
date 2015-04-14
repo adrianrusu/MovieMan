@@ -69,7 +69,7 @@ public class MovieDetailsBaseActivity extends ActionBarActivity implements Obser
         LinearLayout headerLinearLayout = new LinearLayout(this);
         headerLinearLayout.setOrientation(LinearLayout.VERTICAL);
         headerLinearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        View detailsView = LayoutInflater.from(this).inflate(R.layout.recycler_header, null, false);
+        View detailsView = LayoutInflater.from(this).inflate(R.layout.recycler_details_header, null, false);
         View headerView = new View(this);
         headerView.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, flexibleSpaceImageHeight));
         headerView.setMinimumHeight(flexibleSpaceImageHeight);

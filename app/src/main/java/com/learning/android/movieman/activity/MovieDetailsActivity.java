@@ -207,6 +207,9 @@ public class MovieDetailsActivity extends MovieDetailsBaseActivity {
             if (movie.getCredits() != null && !movie.getCredits().getCast().isEmpty()) {
                 movieDetailsAdapter.setCastList(movie.getCredits().getCast());
             }
+            if (movie.getTrailers() != null && !movie.getTrailers().getYoutube().isEmpty()) {
+                movieDetailsAdapter.setTrailers(movie.getTrailers().getYoutube());
+            }
         }
     }
 
