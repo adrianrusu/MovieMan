@@ -78,20 +78,7 @@ public class MovieDetailsRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
                     public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
                         Bitmap bitmap = response.getBitmap();
                         if (bitmap != null) {
-                            ImageView trailerThumbnail = ((CastItemViewHolder) viewHolder).imageProfile;
-                            trailerThumbnail.setImageBitmap(bitmap);
-                            trailerThumbnail.setClickable(true);
-                            trailerThumbnail.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    System.out.println("CLIIIIICK");
-                                    Intent intent = new Intent();
-                                    intent.setAction(Intent.ACTION_VIEW);
-                                    intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                                    intent.setData(Uri.parse("http://casidiablo.net"));
-                                    context.startActivity(intent);
-                                }
-                            });
+                            ((CastItemViewHolder) viewHolder).imageProfile.setImageBitmap(bitmap);
                         }
                     }
 
@@ -109,7 +96,7 @@ public class MovieDetailsRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
             if (castList != null) {
                 index -= castList.size();
             }
-            YoutubeTrailer trailer = trailers.get(index);
+            final YoutubeTrailer trailer = trailers.get(index);
 
             ((TrailerItemViewHolder) viewHolder).textTrailerName.setText(trailer.getName());
             if (trailer.getSource() != null) {
@@ -122,7 +109,18 @@ public class MovieDetailsRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
                     public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
                         Bitmap bitmap = response.getBitmap();
                         if (bitmap != null) {
-                            ((TrailerItemViewHolder) viewHolder).imageThumbnail.setImageBitmap(bitmap);
+                            ImageView trailerThumbnail = ((TrailerItemViewHolder) viewHolder).imageThumbnail;
+                            trailerThumbnail.setImageBitmap(bitmap);
+                            trailerThumbnail.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent();
+                                    intent.setAction(Intent.ACTION_VIEW);
+                                    intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                                    intent.setData(Uri.parse("https://www.youtube.com/watch?v=" + trailer.getSource()));
+                                    context.startActivity(intent);
+                                }
+                            });
                         }
                     }
 

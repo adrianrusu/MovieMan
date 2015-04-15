@@ -20,6 +20,7 @@ import com.learning.android.movieman.R;
 import com.learning.android.movieman.backend.Repository;
 import com.learning.android.movieman.model.Crew;
 import com.learning.android.movieman.model.Movie;
+import com.learning.android.movieman.model.YoutubeTrailer;
 import com.learning.android.movieman.util.JsonUtils;
 import com.learning.android.movieman.util.UrlEndpoints;
 
@@ -27,7 +28,9 @@ import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class MovieDetailsActivity extends MovieDetailsBaseActivity {
 
@@ -208,7 +211,13 @@ public class MovieDetailsActivity extends MovieDetailsBaseActivity {
                 movieDetailsAdapter.setCastList(movie.getCredits().getCast());
             }
             if (movie.getTrailers() != null && !movie.getTrailers().getYoutube().isEmpty()) {
-                movieDetailsAdapter.setTrailers(movie.getTrailers().getYoutube());
+                List<YoutubeTrailer> trailers = new ArrayList<>();
+                for (YoutubeTrailer trailer : movie.getTrailers().getYoutube()) {
+                    if (trailer.getType().equals("Trailer")) {
+                        trailers.add(trailer);
+                    }
+                }
+                movieDetailsAdapter.setTrailers(trailers);
             }
         }
     }
