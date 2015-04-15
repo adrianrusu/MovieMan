@@ -10,7 +10,6 @@ public class SearchFragment extends MoviesGridFragment {
     private static final String ARG_QUERY = "query";
 
     private String query;
-    private boolean matchModePhrase = true;
 
     public static SearchFragment newInstance(String param1) {
         SearchFragment fragment = new SearchFragment();

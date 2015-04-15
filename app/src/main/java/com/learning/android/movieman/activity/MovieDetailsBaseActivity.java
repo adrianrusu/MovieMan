@@ -18,7 +18,6 @@ import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
@@ -116,7 +115,6 @@ public class MovieDetailsBaseActivity extends ActionBarActivity implements Obser
             }
         });
 
-
         fab = findViewById(R.id.floating_actions_menu);
         ((FloatingActionsMenu) fab).setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
             @Override
@@ -132,13 +130,13 @@ public class MovieDetailsBaseActivity extends ActionBarActivity implements Obser
         findViewById(R.id.floating_action_fav).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MovieDetailsBaseActivity.this, "Added to favourites", Toast.LENGTH_SHORT).show();
+                addToFavourites();
             }
         });
         findViewById(R.id.floating_action_watch).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MovieDetailsBaseActivity.this, "Added to watchlist", Toast.LENGTH_SHORT).show();
+                addToWatchlist();
             }
         });
         fabMargin = getResources().getDimensionPixelSize(R.dimen.material_default_spacing);
@@ -151,6 +149,12 @@ public class MovieDetailsBaseActivity extends ActionBarActivity implements Obser
                 onScrollChanged(0, false, false);
             }
         });
+    }
+
+    protected void addToWatchlist() {
+    }
+
+    protected void addToFavourites() {
     }
 
     protected int getActionBarSize() {

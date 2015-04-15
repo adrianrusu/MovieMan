@@ -9,6 +9,7 @@ import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -246,5 +247,27 @@ public class MovieDetailsActivity extends MovieDetailsBaseActivity {
 
     private String getBackdropRequestUrl() {
         return UrlEndpoints.URL_API_IMAGES + UrlEndpoints.URL_BACKDROP_LARGE + movie.getBackdropPath();
+    }
+
+    @Override
+    protected void addToFavourites() {
+        if (Repository.getInstance().getDbHandler().isInFavourites(movieId)) {
+            Repository.getInstance().getDbHandler().removeFromFavorites(movieId);
+            Toast.makeText(MovieDetailsActivity.this, "Removed from favourites", Toast.LENGTH_SHORT).show();
+        } else {
+            Repository.getInstance().getDbHandler().addToFavorites(movieId);
+            Toast.makeText(MovieDetailsActivity.this, "Added to favourites", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void addToWatchlist() {
+        if (Repository.getInstance().getDbHandler().isInWatchlist(movieId)) {
+            Repository.getInstance().getDbHandler().removeFromWatchList(movieId);
+            Toast.makeText(MovieDetailsActivity.this, "Removed from watchlist", Toast.LENGTH_SHORT).show();
+        } else {
+            Repository.getInstance().getDbHandler().addToWatchlist(movieId);
+            Toast.makeText(MovieDetailsActivity.this, "Added to watchlist", Toast.LENGTH_SHORT).show();
+        }
     }
 }

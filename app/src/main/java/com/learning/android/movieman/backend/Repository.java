@@ -1,5 +1,6 @@
 package com.learning.android.movieman.backend;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.LruCache;
 
@@ -14,10 +15,14 @@ public class Repository {
 
     private static Repository instance;
 
+    private DatabaseHandler dbHandler;
+
     private RequestQueue requestQueue;
     private ImageLoader imageLoader;
 
-    public Repository() {
+    public Repository(Context context) {
+        dbHandler = new DatabaseHandler(context);
+
         requestQueue = Volley.newRequestQueue(MovieManApplication.getAppContext());
         imageLoader = new ImageLoader(requestQueue, new ImageLoader.ImageCache() {
 
@@ -36,10 +41,15 @@ public class Repository {
     }
 
     public static Repository getInstance() {
-        if (instance == null) {
-            instance = new Repository();
-        }
         return instance;
+    }
+
+    public static void setInstance(Repository instance) {
+        Repository.instance = instance;
+    }
+
+    public DatabaseHandler getDbHandler() {
+        return dbHandler;
     }
 
     public RequestQueue getRequestQueue() {

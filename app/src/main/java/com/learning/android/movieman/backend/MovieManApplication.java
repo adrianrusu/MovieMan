@@ -23,5 +23,6 @@ public class MovieManApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        Repository.setInstance(new Repository(getApplicationContext()));
     }
 }
