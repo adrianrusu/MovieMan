@@ -31,8 +31,7 @@
         <com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView
             android:id="@+id/recycler"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="vertical" />
+            android:layout_height="wrap_content" />
 
         <include
             android:id="@+id/app_bar"
@@ -41,9 +40,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginLeft="72dp"
-            android:elevation="@dimen/toolbar_elevation">
+            android:elevation="@dimen/toolbar_elevation"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/title"
@@ -54,20 +53,21 @@
                 android:maxLines="1"
                 android:minHeight="?attr/actionBarSize"
                 android:textColor="@android:color/white"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/flexible_space_image_height"
                 android:background="@android:color/transparent" />
+
         </LinearLayout>
 
         <com.getbase.floatingactionbutton.FloatingActionsMenu xmlns:fab="http://schemas.android.com/apk/res-auto"
             android:id="@+id/floating_actions_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_addButtonStrokeVisible="false"
-            android:elevation="@dimen/toolbar_elevation">
+            android:elevation="@dimen/toolbar_elevation"
+            fab:fab_addButtonStrokeVisible="false">
 
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:id="@+id/floating_action_watch"
@@ -90,12 +90,12 @@
         </com.getbase.floatingactionbutton.FloatingActionsMenu>
     </FrameLayout>
 
-    <!--<fragment-->
-    <!--android:id="@+id/fragment_navigation_drawer"-->
-    <!--android:name="com.learning.android.movieman.fragment.NavigationDrawerFragment"-->
-    <!--android:layout_width="@dimen/nav_drawer_width"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_gravity="start"-->
-    <!--android:elevation="8dp"-->
-    <!--app:layout="@layout/fragment_navigation_drawer" />-->
+    <fragment
+        android:id="@+id/fragment_navigation_drawer"
+        android:name="com.learning.android.movieman.fragment.NavigationDrawerFragment"
+        android:layout_width="@dimen/nav_drawer_width"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:elevation="8dp"
+        app:layout="@layout/fragment_navigation_drawer" />
 </android.support.v4.widget.DrawerLayout>

@@ -82,6 +82,7 @@ public class MovieDetailsActivity extends MovieDetailsBaseActivity {
         if (vibrantRgbColor != 0) {
             setOverlayAndToolbarColor(vibrantRgbColor);
         }
+
         setTitle(null);
 
         sendApiRequest();
