@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.learning.android.movieman.model.MovieState;
 
@@ -25,6 +26,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_MOVIE_WATCHLIST = "watchlist";
     private static final String KEY_MOVIE_FAVORITE = "favorite";
 
+    private static final String CREATE_TABLE_MOVIES = "CREATE TABLE " + TABLE_MOVIES + " (" +
+            KEY_MOVIE_ID + " INTEGER PRIMARY KEY, " +
+            KEY_MOVIE_WATCHLIST + " TEXT NOT NULL, " +
+            KEY_MOVIE_FAVORITE + " TEXT NOT NULL);";
+
     private static final String[] SELECT_ALL = new String[]{KEY_MOVIE_ID, KEY_MOVIE_WATCHLIST, KEY_MOVIE_FAVORITE};
 
     public DatabaseHandler(Context context) {
@@ -33,143 +39,114 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABLE_MOVIES + " (" +
-                KEY_MOVIE_ID + " INTEGER PRIMARY KEY, " +
-                KEY_MOVIE_WATCHLIST + " TEXT, " +
-                KEY_MOVIE_FAVORITE + " TEXT)");
+        db.execSQL(CREATE_TABLE_MOVIES);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        Log.w(this.getClass().getCanonicalName(), "Upgrading database. Existing contents will be lost. [" + oldVersion + "] -> [" + newVersion + "]");
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MOVIES);
+
+        // Recreate after dropping
         onCreate(db);
     }
 
-    public void addMovie(Long id) {
+    public void persistMovieState(MovieState movieState) {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_MOVIE_ID, id);
-        values.put(KEY_MOVIE_WATCHLIST, "false");
-        values.put(KEY_MOVIE_FAVORITE, "false");
+        values.put(KEY_MOVIE_ID, movieState.getMovieId());
+        values.put(KEY_MOVIE_WATCHLIST, String.valueOf(movieState.isWatchlist()));
+        values.put(KEY_MOVIE_FAVORITE, String.valueOf(movieState.isFavourite()));
 
         db.insert(TABLE_MOVIES, null, values);
+        db.close();
     }
 
-    public MovieState getMovieState(Long id) {
+    public MovieState getMovieState(Long movieId) {
         SQLiteDatabase db = getReadableDatabase();
         MovieState result = null;
 
-        Cursor cursor = db.query(TABLE_MOVIES, SELECT_ALL, KEY_MOVIE_ID + "=?", new String[]{String.valueOf(id)}, null, null, null, null);
-        if (cursor.moveToFirst()) {
-            result = new MovieState(cursor.getLong(0), Boolean.parseBoolean(cursor.getString(1)), Boolean.parseBoolean(cursor.getString(2)));
-            System.out.println("Id : " + result.getMovieId() + ", isWatchlist : " + result.isWatchlist() + ", isFavorite : " + result.isFavourite());
-        }
-        cursor.close();
-        db.close();
+        Cursor cursor = db.query(TABLE_MOVIES, SELECT_ALL, KEY_MOVIE_ID + "=?", new String[] { String.valueOf(movieId) }, null, null, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                int watchlistIndex = cursor.getColumnIndex(KEY_MOVIE_WATCHLIST);
+                int favouriteIndex = cursor.getColumnIndex(KEY_MOVIE_FAVORITE);
 
+                result = new MovieState(movieId, Boolean.parseBoolean(cursor.getString(favouriteIndex)), Boolean.parseBoolean(cursor.getString(watchlistIndex)));
+            }
+            cursor.close();
+        }
+        db.close();
         return result;
     }
 
-    private void updateMovieWatchlist(Long id, boolean state) {
-        SQLiteDatabase db = getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(KEY_MOVIE_WATCHLIST, String.valueOf(state));
-
-        int result = db.update(TABLE_MOVIES, values, KEY_MOVIE_ID + "=?", new String[]{String.valueOf(id)});
-        db.close();
-
-        if (result == 0) {
-            addMovie(id);
-            updateMovieFavorite(id, state);
-        }
-    }
-
-    private void updateMovieFavorite(Long id, boolean state) {
-        SQLiteDatabase db = getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(KEY_MOVIE_FAVORITE, String.valueOf(state));
-
-        int result = db.update(TABLE_MOVIES, values, KEY_MOVIE_ID + "=?", new String[]{String.valueOf(id)});
-        db.close();
-
-        if (result == 0) {
-            addMovie(id);
-            updateMovieFavorite(id, state);
-        }
-    }
-
-    public List<Long> getWatchlistIds() {
+    public List<MovieState> getMovieStates() {
         SQLiteDatabase db = getReadableDatabase();
-        List<Long> resultList = new ArrayList<>();
+        List<MovieState> resultList = new ArrayList<>();
 
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_MOVIES, null);
-        if (cursor.moveToFirst()) {
-            while (!cursor.isAfterLast()) {
-                if (Boolean.parseBoolean(cursor.getString(1))) {
-                    resultList.add(cursor.getLong(0));
-                }
-                cursor.moveToNext();
-            }
-        }
-        cursor.close();
-        db.close();
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                int movieIdIndex = cursor.getColumnIndex(KEY_MOVIE_ID);
+                int watchlistIndex = cursor.getColumnIndex(KEY_MOVIE_WATCHLIST);
+                int favouriteIndex = cursor.getColumnIndex(KEY_MOVIE_FAVORITE);
 
+                resultList.add(new MovieState(cursor.getLong(movieIdIndex), Boolean.parseBoolean(cursor.getString(favouriteIndex)), Boolean.parseBoolean(cursor.getString(watchlistIndex))));
+            }
+            cursor.close();
+        }
+        db.close();
         return resultList;
     }
 
-    public List<Long> getFavouritesIds() {
+    public List<Long> getWatchlistMovieIds() {
         SQLiteDatabase db = getReadableDatabase();
         List<Long> resultList = new ArrayList<>();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_MOVIES, null);
-        if (cursor.moveToFirst()) {
-            while (!cursor.isAfterLast()) {
-                if (Boolean.parseBoolean(cursor.getString(2))) {
-                    resultList.add(cursor.getLong(0));
-                }
-                cursor.moveToNext();
-            }
-        }
-        cursor.close();
-        db.close();
+        Cursor cursor = db.query(TABLE_MOVIES, new String[] { KEY_MOVIE_ID }, KEY_MOVIE_WATCHLIST + "=?", new String[] { String.valueOf(true) }, null, null, null );
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                int movieIdIndex = cursor.getColumnIndex(KEY_MOVIE_ID);
 
+                resultList.add(cursor.getLong(movieIdIndex));
+            }
+            cursor.close();
+        }
+        db.close();
         return resultList;
     }
 
-    public boolean isInWatchlist(Long id) {
-        MovieState state = getMovieState(id);
-        if (state != null) {
-            return state.isWatchlist();
-        } else {
-            return false;
+    public List<Long> getFavoriteMovieIds() {
+        SQLiteDatabase db = getReadableDatabase();
+        List<Long> resultList = new ArrayList<>();
+
+        Cursor cursor = db.query(TABLE_MOVIES, new String[] { KEY_MOVIE_ID }, KEY_MOVIE_FAVORITE + "=?", new String[] { String.valueOf(true) }, null, null, null );
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                int movieIdIndex = cursor.getColumnIndex(KEY_MOVIE_ID);
+
+                resultList.add(cursor.getLong(movieIdIndex));
+            }
+            cursor.close();
         }
+        db.close();
+        return resultList;
     }
 
-    public boolean isInFavourites(Long id) {
-        MovieState state = getMovieState(id);
-        if (state != null) {
-            return state.isFavourite();
-        } else {
-            return false;
-        }
+    public void updateMovieState(MovieState movieState) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_MOVIE_WATCHLIST, String.valueOf(movieState.isWatchlist()));
+        values.put(KEY_MOVIE_FAVORITE, String.valueOf(movieState.isFavourite()));
+
+        db.update(TABLE_MOVIES, values, KEY_MOVIE_ID + "=?", new String[] { String.valueOf(movieState.getMovieId()) });
+        db.close();
     }
 
-    public void addToWatchlist(Long id) {
-        updateMovieWatchlist(id, true);
-    }
-
-    public void addToFavorites(Long id) {
-        updateMovieFavorite(id, true);
-    }
-
-    public void removeFromWatchList(Long id) {
-        updateMovieWatchlist(id, false);
-    }
-
-    public void removeFromFavorites(Long id) {
-        updateMovieFavorite(id, false);
+    private void showCurrentMovieState(Long movieId) {
+        MovieState persistedMovieState = getMovieState(movieId);
+        System.out.println("Persisted movie [id : " + persistedMovieState.getMovieId() + ", isWatchlist : " + persistedMovieState.isWatchlist() + ", isFavorite : " + persistedMovieState.isFavourite() + "]");
     }
 }

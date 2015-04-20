@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.learning.android.movieman.R;
+import com.learning.android.movieman.backend.Repository;
 import com.learning.android.movieman.fragment.HomeFragment;
 import com.learning.android.movieman.fragment.NavigationDrawerFragment;
 

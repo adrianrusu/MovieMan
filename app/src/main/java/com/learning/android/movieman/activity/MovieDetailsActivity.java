@@ -252,23 +252,11 @@ public class MovieDetailsActivity extends MovieDetailsBaseActivity {
 
     @Override
     protected void addToFavourites() {
-        if (Repository.getInstance().getDbHandler().isInFavourites(movieId)) {
-            Repository.getInstance().getDbHandler().removeFromFavorites(movieId);
-            Toast.makeText(MovieDetailsActivity.this, "Removed from favourites", Toast.LENGTH_SHORT).show();
-        } else {
-            Repository.getInstance().getDbHandler().addToFavorites(movieId);
-            Toast.makeText(MovieDetailsActivity.this, "Added to favourites", Toast.LENGTH_SHORT).show();
-        }
+        Toast.makeText(MovieDetailsActivity.this, Repository.getInstance().toggleFavorite(movieId), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void addToWatchlist() {
-        if (Repository.getInstance().getDbHandler().isInWatchlist(movieId)) {
-            Repository.getInstance().getDbHandler().removeFromWatchList(movieId);
-            Toast.makeText(MovieDetailsActivity.this, "Removed from watchlist", Toast.LENGTH_SHORT).show();
-        } else {
-            Repository.getInstance().getDbHandler().addToWatchlist(movieId);
-            Toast.makeText(MovieDetailsActivity.this, "Added to watchlist", Toast.LENGTH_SHORT).show();
-        }
+        Toast.makeText(MovieDetailsActivity.this, Repository.getInstance().toggleWatchlist(movieId), Toast.LENGTH_SHORT).show();
     }
 }

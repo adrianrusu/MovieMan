@@ -7,6 +7,7 @@ import android.util.LruCache;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.learning.android.movieman.model.MovieState;
 
 /**
  * Created by adrianrusu on 3/21/15.
@@ -58,5 +59,39 @@ public class Repository {
 
     public ImageLoader getImageLoader() {
         return imageLoader;
+    }
+
+    public String toggleWatchlist(Long movieId) {
+        MovieState movieState = dbHandler.getMovieState(movieId);
+        if (movieState == null) {
+            movieState = new MovieState(movieId, false, true);
+            dbHandler.persistMovieState(movieState);
+            return "Added to watchlist";
+        } else if (movieState.isWatchlist()) {
+            movieState.setWatchlist(false);
+            dbHandler.updateMovieState(movieState);
+            return "Removed from watchlist";
+        } else {
+            movieState.setWatchlist(true);
+            dbHandler.updateMovieState(movieState);
+            return "Added to watchlist";
+        }
+    }
+
+    public String toggleFavorite(Long movieId) {
+        MovieState movieState = dbHandler.getMovieState(movieId);
+        if (movieState == null) {
+            movieState = new MovieState(movieId, true, false);
+            dbHandler.persistMovieState(movieState);
+            return "Added to favorites";
+        } else if (movieState.isFavourite()) {
+            movieState.setFavourite(false);
+            dbHandler.updateMovieState(movieState);
+            return "Removed from favorites";
+        } else {
+            movieState.setFavourite(true);
+            dbHandler.updateMovieState(movieState);
+            return "Added to favorites";
+        }
     }
 }
