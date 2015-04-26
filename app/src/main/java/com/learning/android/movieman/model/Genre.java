@@ -1,9 +1,11 @@
 package com.learning.android.movieman.model;
 
+import java.io.Serializable;
+
 /**
  * Created by adrianrusu on 3/21/15.
  */
-public class Genre {
+public class Genre implements Serializable {
     private Long id;
     private String name;
 

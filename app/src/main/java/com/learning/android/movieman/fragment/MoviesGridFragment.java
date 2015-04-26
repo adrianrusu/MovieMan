@@ -45,10 +45,10 @@ public abstract class MoviesGridFragment extends Fragment implements RecyclerVie
 
     private static final String MOVIES_LIST = "movies_list";
 
-    private MovieListAdapter movieListAdapter;
-    private TextView textViewError;
+    protected MovieListAdapter movieListAdapter;
+    protected TextView textViewError;
 
-    private List<MovieSmall> movies = new ArrayList<>();
+    protected List<MovieSmall> movies = new ArrayList<>();
 
     protected abstract String getRequestUrl();
 

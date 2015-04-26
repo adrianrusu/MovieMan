@@ -53,7 +53,12 @@
         </activity>
         <activity
             android:name=".activity.MovieDetailsBaseActivity"
-            android:label="@string/title_activity_movie_details_test"></activity>
+            android:label="@string/title_activity_movie_details_test" />
+        <activity
+            android:name=".activity.WatchlistActivity"
+            android:label="@string/title_activity_watchlist"
+            android:launchMode="singleTop"
+            android:parentActivityName=".activity.MainActivity" />
     </application>
 
 </manifest>

@@ -37,6 +37,7 @@ public class MovieDetailsActivity extends MovieDetailsBaseActivity {
 
     public static final int SOURCE_MAIN_ACTIVITY = 1;
     public static final int SOURCE_SEARCH_ACTIVITY = 2;
+    public static final int SOURCE_WATCHLIST_ACTIVITY = 3;
     private static DecimalFormat df = new DecimalFormat("#,###,###,##0");
 
     private Long movieId;
@@ -94,6 +95,11 @@ public class MovieDetailsActivity extends MovieDetailsBaseActivity {
             case android.R.id.home:
                 if (source == SOURCE_SEARCH_ACTIVITY) {
                     Intent intent = new Intent(this, SearchActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    NavUtils.navigateUpTo(this, intent);
+                } else if (source == SOURCE_WATCHLIST_ACTIVITY) {
+                    System.out.println("From watchlist activity");
+                    Intent intent = new Intent(this, WatchlistActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     NavUtils.navigateUpTo(this, intent);
                 } else {

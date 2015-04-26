@@ -6,6 +6,9 @@ import android.os.Bundle;
 import com.learning.android.movieman.activity.MovieDetailsActivity;
 import com.learning.android.movieman.util.UrlEndpoints;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 public class SearchFragment extends MoviesGridFragment {
     private static final String ARG_QUERY = "query";
 
@@ -30,7 +33,11 @@ public class SearchFragment extends MoviesGridFragment {
     @Override
     protected String getRequestUrl() {
         if (query != null) {
-            return UrlEndpoints.URL_API_SEARCH + query + UrlEndpoints.URL_PARAM_SEARCH_TYPE_AUTOCOMPLETE;
+            try {
+                return UrlEndpoints.URL_API_SEARCH + URLEncoder.encode(query, "UTF-8") + UrlEndpoints.URL_PARAM_SEARCH_TYPE_AUTOCOMPLETE;
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }

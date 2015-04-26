@@ -67,7 +67,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         MovieState result = null;
 
-        Cursor cursor = db.query(TABLE_MOVIES, SELECT_ALL, KEY_MOVIE_ID + "=?", new String[] { String.valueOf(movieId) }, null, null, null);
+        Cursor cursor = db.query(TABLE_MOVIES, SELECT_ALL, KEY_MOVIE_ID + "=?", new String[]{String.valueOf(movieId)}, null, null, null);
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 int watchlistIndex = cursor.getColumnIndex(KEY_MOVIE_WATCHLIST);
@@ -104,9 +104,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         List<Long> resultList = new ArrayList<>();
 
-        Cursor cursor = db.query(TABLE_MOVIES, new String[] { KEY_MOVIE_ID }, KEY_MOVIE_WATCHLIST + "=?", new String[] { String.valueOf(true) }, null, null, null );
+        Cursor cursor = db.query(TABLE_MOVIES, new String[]{KEY_MOVIE_ID}, KEY_MOVIE_WATCHLIST + "=?", new String[]{String.valueOf(true)}, null, null, null);
         if (cursor != null) {
-            if (cursor.moveToFirst()) {
+            while (cursor.moveToNext()) {
                 int movieIdIndex = cursor.getColumnIndex(KEY_MOVIE_ID);
 
                 resultList.add(cursor.getLong(movieIdIndex));
@@ -121,7 +121,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         List<Long> resultList = new ArrayList<>();
 
-        Cursor cursor = db.query(TABLE_MOVIES, new String[] { KEY_MOVIE_ID }, KEY_MOVIE_FAVORITE + "=?", new String[] { String.valueOf(true) }, null, null, null );
+        Cursor cursor = db.query(TABLE_MOVIES, new String[]{KEY_MOVIE_ID}, KEY_MOVIE_FAVORITE + "=?", new String[]{String.valueOf(true)}, null, null, null);
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 int movieIdIndex = cursor.getColumnIndex(KEY_MOVIE_ID);
@@ -141,7 +141,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_MOVIE_WATCHLIST, String.valueOf(movieState.isWatchlist()));
         values.put(KEY_MOVIE_FAVORITE, String.valueOf(movieState.isFavourite()));
 
-        db.update(TABLE_MOVIES, values, KEY_MOVIE_ID + "=?", new String[] { String.valueOf(movieState.getMovieId()) });
+        db.update(TABLE_MOVIES, values, KEY_MOVIE_ID + "=?", new String[]{String.valueOf(movieState.getMovieId())});
         db.close();
     }
 

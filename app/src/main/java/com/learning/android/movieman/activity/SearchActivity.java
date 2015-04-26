@@ -33,7 +33,6 @@ public class SearchActivity extends ActionBarActivity {
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            //use the query to search your data somehow
 
             setTitle(query);
             SearchFragment searchFragment = SearchFragment.newInstance(query);
