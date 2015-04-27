@@ -9,10 +9,8 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.learning.android.movieman.R;
-import com.learning.android.movieman.backend.Repository;
 import com.learning.android.movieman.fragment.HomeFragment;
 import com.learning.android.movieman.fragment.NavigationDrawerFragment;
 
@@ -48,8 +46,6 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Toast.makeText(getApplicationContext(), "Settings pressed", Toast.LENGTH_SHORT).show();
-
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.

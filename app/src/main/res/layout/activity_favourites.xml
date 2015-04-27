@@ -8,15 +8,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.learning.android.movieman.activity.WatchlistActivity">
+        tools:context="com.learning.android.movieman.activity.FavouritesActivity">
 
         <include
             android:id="@+id/app_bar"
             layout="@layout/app_bar" />
 
         <fragment
-            android:id="@+id/fragment_watchlist"
-            android:name="com.learning.android.movieman.fragment.WatchlistFragment"
+            android:id="@+id/fragment_favorites"
+            android:name="com.learning.android.movieman.fragment.FavouritesFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/app_bar"

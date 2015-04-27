@@ -11,5 +11,5 @@
         <item name="colorAccent">@color/accentColor</item>
         <item name="colorControlHighlight">@color/primaryLight</item>
     </style>
-    
+
 </resources>

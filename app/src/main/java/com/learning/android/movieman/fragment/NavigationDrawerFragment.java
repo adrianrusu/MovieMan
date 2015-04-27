@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import com.learning.android.movieman.R;
 import com.learning.android.movieman.activity.AboutActivity;
+import com.learning.android.movieman.activity.FavouritesActivity;
 import com.learning.android.movieman.activity.MainActivity;
 import com.learning.android.movieman.activity.WatchlistActivity;
 import com.learning.android.movieman.adapter.NavbarRecyclerAdapter;
@@ -117,6 +118,8 @@ public class NavigationDrawerFragment extends Fragment implements RecyclerViewSe
             intent = new Intent(getActivity(), MainActivity.class);
         } else if (position == 2 && !getActivity().getClass().equals(WatchlistActivity.class)) {
             intent = new Intent(getActivity(), WatchlistActivity.class);
+        } else if (position == 3 && !getActivity().getClass().equals(FavouritesActivity.class)) {
+            intent = new Intent(getActivity(), FavouritesActivity.class);
         } else if (position == 4 && !getActivity().getClass().equals(AboutActivity.class)) {
             intent = new Intent(getActivity(), AboutActivity.class);
         }

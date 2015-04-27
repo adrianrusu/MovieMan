@@ -7,15 +7,15 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.learning.android.movieman.R;
+import com.learning.android.movieman.fragment.FavouritesFragment;
 import com.learning.android.movieman.fragment.NavigationDrawerFragment;
-import com.learning.android.movieman.fragment.WatchlistFragment;
 
-public class WatchlistActivity extends ActionBarActivity {
+public class FavouritesActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_watchlist);
+        setContentView(R.layout.activity_favourites);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
@@ -28,7 +28,7 @@ public class WatchlistActivity extends ActionBarActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        WatchlistFragment watchlistFragment = (WatchlistFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_watchlist);
-        watchlistFragment.refresh();
+        FavouritesFragment favouritesFragment = (FavouritesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_favorites);
+        favouritesFragment.refresh();
     }
 }

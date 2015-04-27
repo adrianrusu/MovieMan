@@ -123,7 +123,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         Cursor cursor = db.query(TABLE_MOVIES, new String[]{KEY_MOVIE_ID}, KEY_MOVIE_FAVORITE + "=?", new String[]{String.valueOf(true)}, null, null, null);
         if (cursor != null) {
-            if (cursor.moveToFirst()) {
+            while (cursor.moveToNext()) {
                 int movieIdIndex = cursor.getColumnIndex(KEY_MOVIE_ID);
 
                 resultList.add(cursor.getLong(movieIdIndex));
