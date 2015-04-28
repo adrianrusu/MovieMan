@@ -63,6 +63,10 @@
             android:name=".activity.FavouritesActivity"
             android:label="@string/title_activity_favourites"
             android:launchMode="singleTop"
+            android:parentActivityName=".activity.MainActivity" />
+        <activity
+            android:name=".activity.MoviesListActivity"
+            android:label="@string/title_activity_movies_list"
             android:parentActivityName=".activity.MainActivity"></activity>
     </application>
 

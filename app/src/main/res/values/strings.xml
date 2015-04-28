@@ -25,4 +25,9 @@
     <string name="title_activity_movie_details_test">MovieDetailsTestActivity</string>
     <string name="title_activity_watchlist">Watchlist</string>
     <string name="title_activity_favourites">FavouritesActivity</string>
+    <string name="title_activity_movies_list">MoviesListActivity</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="latest">Latest</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="popular">Popular</string>
 </resources>

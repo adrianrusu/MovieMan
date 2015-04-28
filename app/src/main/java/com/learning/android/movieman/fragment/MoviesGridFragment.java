@@ -62,10 +62,7 @@ public abstract class MoviesGridFragment extends Fragment implements RecyclerVie
         textViewError = (TextView) view.findViewById(R.id.text_error);
         RecyclerView moviesRecyclerView = (RecyclerView) view.findViewById(R.id.home_movies_list);
 
-        moviesRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        movieListAdapter = new MovieListAdapter(getActivity());
-        movieListAdapter.setSelectionListener(this);
-        moviesRecyclerView.setAdapter(movieListAdapter);
+        initMoviesGridRecyclerView(moviesRecyclerView);
 
         if (savedInstanceState != null) {
             movies = (List<MovieSmall>) savedInstanceState.getSerializable(MOVIES_LIST);
@@ -76,6 +73,13 @@ public abstract class MoviesGridFragment extends Fragment implements RecyclerVie
 
         // Inflate the layout for this fragment
         return view;
+    }
+
+    protected void initMoviesGridRecyclerView(RecyclerView moviesRecyclerView) {
+        moviesRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        movieListAdapter = new MovieListAdapter(getActivity());
+        movieListAdapter.setSelectionListener(this);
+        moviesRecyclerView.setAdapter(movieListAdapter);
     }
 
     @Override
@@ -130,7 +134,14 @@ public abstract class MoviesGridFragment extends Fragment implements RecyclerVie
     }
 
     @Override
-    public void itemClicked(final View view, final int position) {
+    public void itemClicked(final View view, final int i) {
+        int position = i;
+        if (movieListAdapter.hasHeader()) {
+            if (position == MovieListAdapter.VIEW_TYPE_HEADER) {
+                return;
+            }
+            position -= 1;
+        }
         Intent movieDetailsIntent = new Intent(getActivity(), MovieDetailsActivity.class);
         movieDetailsIntent.putExtra("id", movies.get(position).getId());
         movieDetailsIntent.putExtra("source", getSourcePropertyClass());
