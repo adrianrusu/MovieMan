@@ -19,12 +19,12 @@
     <string name="university">Bucharest Academy of\nEconomic Studies</string>
     <string name="developed_by">Designed and developed by</string>
     <string name="developers">Adrian Rusu\nAlexandru Popescu\nLiviu Rusu</string>
-    <string name="title_activity_movie">MovieActivity</string>
+    <string name="title_activity_movie_details">MovieActivity</string>
+    <string name="title_activity_movie_details_base">ActivityMovieDetailsBase</string>
     <string name="not_available_placeholder">NA</string>
     <string name="title_activity_search">SearchActivity</string>
-    <string name="title_activity_movie_details_test">MovieDetailsTestActivity</string>
     <string name="title_activity_watchlist">Watchlist</string>
-    <string name="title_activity_favourites">FavouritesActivity</string>
+    <string name="title_activity_favourites">Favourites</string>
     <string name="title_activity_movies_list">MoviesListActivity</string>
     <string name="upcoming">Upcoming</string>
     <string name="latest">Latest</string>

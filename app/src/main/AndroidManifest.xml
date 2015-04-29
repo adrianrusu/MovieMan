@@ -25,14 +25,10 @@
         </activity>
         <activity
             android:name=".activity.AboutActivity"
-            android:label="@string/title_activity_about">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.MainActivity" />
-        </activity>
+            android:label="@string/title_activity_about" />
         <activity
             android:name=".activity.MovieDetailsActivity"
-            android:label="@string/title_activity_movie"
+            android:label="@string/title_activity_movie_details"
             android:parentActivityName=".activity.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -41,7 +37,6 @@
         <activity
             android:name=".activity.SearchActivity"
             android:label="@string/title_activity_search"
-            android:launchMode="singleTop"
             android:parentActivityName=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -50,24 +45,29 @@
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.learning.android.movieman.activity.MainActivity" />
         </activity>
         <activity
             android:name=".activity.MovieDetailsBaseActivity"
-            android:label="@string/title_activity_movie_details_test" />
+            android:label="@string/title_activity_movie_details_base" />
         <activity
             android:name=".activity.WatchlistActivity"
             android:label="@string/title_activity_watchlist"
-            android:launchMode="singleTop"
-            android:parentActivityName=".activity.MainActivity" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".activity.FavouritesActivity"
             android:label="@string/title_activity_favourites"
-            android:launchMode="singleTop"
-            android:parentActivityName=".activity.MainActivity" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".activity.MoviesListActivity"
             android:label="@string/title_activity_movies_list"
-            android:parentActivityName=".activity.MainActivity"></activity>
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.learning.android.movieman.activity.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

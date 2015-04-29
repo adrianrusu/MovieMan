@@ -59,7 +59,7 @@ public class MovieDetailsBaseActivity extends ActionBarActivity implements Obser
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         final NavigationDrawerFragment navDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
-        navDrawerFragment.setUp((DrawerLayout) findViewById(R.id.drawer_layout), toolbar, R.id.fragment_navigation_drawer);
+        navDrawerFragment.setUp((DrawerLayout) findViewById(R.id.drawer_layout), null, R.id.fragment_navigation_drawer);
 
         flexibleSpaceImageHeight = getResources().getDimensionPixelSize(R.dimen.flexible_space_image_height);
         actionBarSize = getActionBarSize();

@@ -14,6 +14,10 @@ public class UrlEndpoints {
     public static final String URL_API_HOME = "http://api.themoviedb.org/3/";
     public static final String URL_API_MOVIE = URL_API_HOME + "movie/";
     public static final String URL_API_NOW_PLAYING = URL_API_MOVIE + "now_playing" + URL_PARAM_API_KEY;
+    public static final String URL_API_UPCOMING = URL_API_MOVIE + "upcoming" + URL_PARAM_API_KEY;
+    public static final String URL_API_POPULAR = URL_API_MOVIE + "popular" + URL_PARAM_API_KEY;
+    public static final String URL_API_TOP_RATED = URL_API_MOVIE + "top_rated" + URL_PARAM_API_KEY;
+    public static final String URL_API_LATEST = URL_API_MOVIE + "latest" + URL_PARAM_API_KEY;
     public static final String URL_API_SEARCH = URL_API_HOME + "search/movie" + URL_PARAM_API_KEY + URL_PARAM_QUERY;
     public static final String URL_API_IMAGES = "http://image.tmdb.org/t/p/";
     public static final String URL_BACKDROP_SMALL = "w300";

@@ -62,36 +62,40 @@ public class NavigationDrawerFragment extends Fragment implements RecyclerViewSe
 
     public void setUp(DrawerLayout layout, Toolbar toolbar, int fragmentId) {
         drawerLayout = layout;
-        drawerToggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_closed) {
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                if (!userLearnedDrawer) {
-                    userLearnedDrawer = true;
-                    saveToPreferences(getActivity(), KEY_USER_LEARNED_DRAWER, Boolean.toString(userLearnedDrawer));
+        if (toolbar != null) {
+            drawerToggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_closed) {
+                @Override
+                public void onDrawerOpened(View drawerView) {
+                    super.onDrawerOpened(drawerView);
+                    if (!userLearnedDrawer) {
+                        userLearnedDrawer = true;
+                        saveToPreferences(getActivity(), KEY_USER_LEARNED_DRAWER, Boolean.toString(userLearnedDrawer));
+                    }
+                    getActivity().invalidateOptionsMenu();
                 }
-                getActivity().invalidateOptionsMenu();
-            }
 
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-                getActivity().invalidateOptionsMenu();
-            }
-        };
-        View containerView = getActivity().findViewById(fragmentId);
+                @Override
+                public void onDrawerClosed(View drawerView) {
+                    super.onDrawerClosed(drawerView);
+                    getActivity().invalidateOptionsMenu();
+                }
+            };
+            View containerView = getActivity().findViewById(fragmentId);
 
-        if (!userLearnedDrawer && !fromSavedInstanceState) {
-            drawerLayout.openDrawer(containerView);
+            if (!userLearnedDrawer && !fromSavedInstanceState) {
+                drawerLayout.openDrawer(containerView);
+            }
         }
 
         drawerLayout.setDrawerListener(drawerToggle);
-        drawerLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                drawerToggle.syncState();
-            }
-        });
+        if (toolbar != null) {
+            drawerLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    drawerToggle.syncState();
+                }
+            });
+        }
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.learning.android.movieman.R;
 import com.learning.android.movieman.fragment.NavigationDrawerFragment;
+import com.learning.android.movieman.fragment.UpcomingMoviesFragment;
 
 public class MoviesListActivity extends ActionBarActivity {
 
@@ -16,8 +17,6 @@ public class MoviesListActivity extends ActionBarActivity {
     public static final String POPULAR = "Popular Movies";
     public static final String LATEST = "Latest Movies";
     public static final String TOP_RATED = "Top Rated Movies";
-
-    private String listType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +29,21 @@ public class MoviesListActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         final NavigationDrawerFragment navDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
-        navDrawerFragment.setUp((DrawerLayout) findViewById(R.id.drawer_layout), toolbar, R.id.fragment_navigation_drawer);
+        navDrawerFragment.setUp((DrawerLayout) findViewById(R.id.drawer_layout), null, R.id.fragment_navigation_drawer);
+        handleExtras(getIntent().getExtras());
+    }
 
-        Bundle extras = getIntent().getExtras();
-
+    private void handleExtras(Bundle extras) {
         if (extras.containsKey(LIST_TYPE)) {
-            listType = extras.getString(LIST_TYPE);
+            String listType = extras.getString(LIST_TYPE);
             setTitle(listType);
+
+            switch (listType) {
+                case UPCOMING:
+                    UpcomingMoviesFragment fragment = new UpcomingMoviesFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+                    break;
+            }
         }
     }
 

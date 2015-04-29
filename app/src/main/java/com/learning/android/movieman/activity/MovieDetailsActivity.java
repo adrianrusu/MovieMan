@@ -39,6 +39,7 @@ public class MovieDetailsActivity extends MovieDetailsBaseActivity {
     public static final int SOURCE_SEARCH_ACTIVITY = 2;
     public static final int SOURCE_WATCHLIST_ACTIVITY = 3;
     public static final int SOURCE_FAVORITES_ACTIVITY = 4;
+    public static final int SOURCE_MOVIES_LISTS = 5;
 
     private static DecimalFormat df = new DecimalFormat("#,###,###,##0");
 
@@ -95,21 +96,21 @@ public class MovieDetailsActivity extends MovieDetailsBaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                Intent intent;
                 if (source == SOURCE_SEARCH_ACTIVITY) {
-                    Intent intent = new Intent(this, SearchActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    NavUtils.navigateUpTo(this, intent);
+                    intent = new Intent(this, SearchActivity.class);
                 } else if (source == SOURCE_WATCHLIST_ACTIVITY) {
-                    Intent intent = new Intent(this, WatchlistActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    NavUtils.navigateUpTo(this, intent);
+                    intent = new Intent(this, WatchlistActivity.class);
                 } else if (source == SOURCE_FAVORITES_ACTIVITY) {
-                    Intent intent = new Intent(this, FavouritesActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    NavUtils.navigateUpTo(this, intent);
+                    intent = new Intent(this, FavouritesActivity.class);
+                } else if (source == SOURCE_MOVIES_LISTS) {
+                    intent = new Intent(this, MoviesListActivity.class);
                 } else {
                     NavUtils.navigateUpFromSameTask(this);
+                    return true;
                 }
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                NavUtils.navigateUpTo(this, intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);
