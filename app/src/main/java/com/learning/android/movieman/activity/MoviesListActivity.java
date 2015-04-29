@@ -6,7 +6,10 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.learning.android.movieman.R;
+import com.learning.android.movieman.fragment.LatestMoviesFragment;
 import com.learning.android.movieman.fragment.NavigationDrawerFragment;
+import com.learning.android.movieman.fragment.PopularMoviesFragment;
+import com.learning.android.movieman.fragment.TopRatedMoviesFragment;
 import com.learning.android.movieman.fragment.UpcomingMoviesFragment;
 
 public class MoviesListActivity extends ActionBarActivity {
@@ -40,9 +43,20 @@ public class MoviesListActivity extends ActionBarActivity {
 
             switch (listType) {
                 case UPCOMING:
-                    UpcomingMoviesFragment fragment = new UpcomingMoviesFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+                    UpcomingMoviesFragment upcomingFragment = new UpcomingMoviesFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, upcomingFragment).commit();
                     break;
+                case POPULAR:
+                    PopularMoviesFragment popularFragment = new PopularMoviesFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, popularFragment).commit();
+                    break;
+                case LATEST:
+                    LatestMoviesFragment latestFragment = new LatestMoviesFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, latestFragment).commit();
+                    break;
+                case TOP_RATED:
+                    TopRatedMoviesFragment topRatedFragment = new TopRatedMoviesFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, topRatedFragment).commit();
             }
         }
     }

@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.learning.android.movieman.model.Movie;
 import com.learning.android.movieman.model.MovieSmall;
+import com.learning.android.movieman.model.MovieUpdate;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,7 +38,6 @@ public class JsonUtils {
             result = gson.fromJson(jsonString, new TypeToken<List<MovieSmall>>() {
             }.getType());
         } catch (JSONException e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
 
@@ -50,5 +50,24 @@ public class JsonUtils {
         }
 
         return getGsonForApi().fromJson(jsonObject.toString(), Movie.class);
+    }
+
+    public static List<MovieUpdate> parseMovieUpdatesJsonResponse(JSONObject jsonObject) {
+        List<MovieUpdate> result = new ArrayList<>();
+        if (jsonObject == null || jsonObject.length() == 1) {
+            return result;
+        }
+
+        try {
+            Gson gson = getGsonForApi();
+
+            String jsonString = jsonObject.get(JsonUtils.KEY_RESULTS).toString().replaceAll("\\\"\\\"|\\\"null\"", "null");
+            result = gson.fromJson(jsonString, new TypeToken<List<MovieUpdate>>() {
+            }.getType());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 }
