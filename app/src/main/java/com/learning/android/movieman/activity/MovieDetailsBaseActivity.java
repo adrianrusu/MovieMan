@@ -135,12 +135,14 @@ public class MovieDetailsBaseActivity extends ActionBarActivity implements Obser
         findViewById(R.id.floating_action_fav).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((FloatingActionsMenu) fab).collapse();
                 addToFavourites();
             }
         });
         findViewById(R.id.floating_action_watch).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((FloatingActionsMenu) fab).collapse();
                 addToWatchlist();
             }
         });
