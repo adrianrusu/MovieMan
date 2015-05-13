@@ -38,9 +38,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by adrianrusu on 4/5/15.
- */
 public abstract class MoviesGridFragment extends Fragment implements RecyclerViewSelectionListener {
 
     private static final String MOVIES_LIST = "movies_list";

@@ -3,9 +3,6 @@ package com.learning.android.movieman.fragment;
 import com.learning.android.movieman.activity.MovieDetailsActivity;
 import com.learning.android.movieman.backend.Repository;
 
-/**
- * Created by adrianrusu on 4/26/15.
- */
 public class WatchlistFragment extends MoviesGridFromListFragment {
 
     @Override

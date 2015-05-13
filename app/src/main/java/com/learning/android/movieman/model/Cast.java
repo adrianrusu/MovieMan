@@ -4,9 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-/**
- * Created by adrianrusu on 3/21/15.
- */
 public class Cast implements Serializable {
 
     private Long id;

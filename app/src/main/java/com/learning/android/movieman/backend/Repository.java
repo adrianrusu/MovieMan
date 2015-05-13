@@ -9,9 +9,6 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.learning.android.movieman.model.MovieState;
 
-/**
- * Created by adrianrusu on 3/21/15.
- */
 public class Repository {
 
     private static Repository instance;

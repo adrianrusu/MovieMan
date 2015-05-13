@@ -1,8 +1,5 @@
 package com.learning.android.movieman.model;
 
-/**
- * Created by adrianrusu on 4/14/15.
- */
 public class YoutubeTrailer {
     private String name;
     private String size;

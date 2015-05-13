@@ -12,9 +12,6 @@ import com.learning.android.movieman.model.MovieState;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by adrianrusu on 3/21/15.
- */
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;

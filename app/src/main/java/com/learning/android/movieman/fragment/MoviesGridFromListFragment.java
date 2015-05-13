@@ -16,9 +16,6 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-/**
- * Created by adrianrusu on 4/27/15.
- */
 public abstract class MoviesGridFromListFragment extends MoviesGridFragment {
 
     protected List<Long> movieIds;

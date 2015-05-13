@@ -2,9 +2,6 @@ package com.learning.android.movieman.model;
 
 import java.util.List;
 
-/**
- * Created by adrianrusu on 3/21/15.
- */
 public class MovieImage {
     private Long id;
     private List<Backdrop> backdrops;

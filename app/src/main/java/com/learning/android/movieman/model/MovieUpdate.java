@@ -1,8 +1,5 @@
 package com.learning.android.movieman.model;
 
-/**
- * Created by adrianrusu on 4/29/15.
- */
 public class MovieUpdate {
 
     private Long id;

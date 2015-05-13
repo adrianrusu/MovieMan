@@ -2,9 +2,6 @@ package com.learning.android.movieman.model;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by adrianrusu on 4/6/15.
- */
 public class Crew {
 
     private Long id;

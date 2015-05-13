@@ -3,9 +3,6 @@ package com.learning.android.movieman.fragment;
 import com.learning.android.movieman.activity.MovieDetailsActivity;
 import com.learning.android.movieman.util.UrlEndpoints;
 
-/**
- * Created by adrianrusu on 4/29/15.
- */
 public class TopRatedMoviesFragment extends MoviesGridFragment {
     @Override
     protected String getRequestUrl() {

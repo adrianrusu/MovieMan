@@ -5,9 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Created by adrianrusu on 3/21/15.
- */
 public class MovieSmall implements Serializable {
     private Long id;
     private String title;

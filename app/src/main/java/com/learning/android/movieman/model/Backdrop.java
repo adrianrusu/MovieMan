@@ -1,8 +1,5 @@
 package com.learning.android.movieman.model;
 
-/**
- * Created by adrianrusu on 3/21/15.
- */
 public class Backdrop {
     private String filePath;
     private int width;

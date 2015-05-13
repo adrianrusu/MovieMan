@@ -13,9 +13,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by adrianrusu on 3/22/15.
- */
 public class JsonUtils {
     public static final String KEY_RESULTS = "results";
 

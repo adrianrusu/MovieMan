@@ -21,9 +21,6 @@ import com.learning.android.movieman.util.UrlEndpoints;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by adrianrusu on 3/23/15.
- */
 public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static final int VIEW_TYPE_HEADER = 0;

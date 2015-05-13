@@ -6,9 +6,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by adrianrusu on 3/21/15.
- */
 public class Movie extends MovieSmall {
     @SerializedName("imdb_id")
     private String imdbId;

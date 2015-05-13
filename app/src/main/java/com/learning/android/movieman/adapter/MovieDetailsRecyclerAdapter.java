@@ -21,9 +21,6 @@ import com.learning.android.movieman.util.UrlEndpoints;
 
 import java.util.List;
 
-/**
- * Created by adrianrusu on 4/6/15.
- */
 public class MovieDetailsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int VIEW_TYPE_HEADER = 0;
     private static final int VIEW_TYPE_CAST_ITEM = 1;

@@ -1,8 +1,5 @@
 package com.learning.android.movieman.model;
 
-/**
- * Created by adrianrusu on 4/15/15.
- */
 public class MovieState {
     private Long movieId;
     private boolean isFavourite;

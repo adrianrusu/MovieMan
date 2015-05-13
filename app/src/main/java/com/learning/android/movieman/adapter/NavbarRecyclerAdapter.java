@@ -10,9 +10,6 @@ import android.widget.TextView;
 
 import com.learning.android.movieman.R;
 
-/**
- * Created by adrianrusu on 3/16/15.
- */
 public class NavbarRecyclerAdapter extends RecyclerView.Adapter<NavbarRecyclerAdapter.ViewHolder> {
     public static final int TYPE_HEADER = 0;
     public static final int TYPE_ITEM = 1;

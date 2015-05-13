@@ -2,9 +2,6 @@ package com.learning.android.movieman.util;
 
 import com.learning.android.movieman.backend.MovieManApplication;
 
-/**
- * Created by adrianrusu on 3/22/15.
- */
 public class UrlEndpoints {
     public static final String URL_PARAM_API_KEY = "?api_key=" + MovieManApplication.API_KEY;
     public static final String URL_PARAM_QUERY = "&query=";

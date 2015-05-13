@@ -18,9 +18,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by adrianrusu on 4/29/15.
- */
 public class LatestMoviesFragment extends MoviesGridFromListFragment {
 
     private List<Long> latestChangedMovies;
@@ -65,7 +62,7 @@ public class LatestMoviesFragment extends MoviesGridFromListFragment {
 
         int i = 0;
         while (latestChangedMovies.size() <= 20 && i < movieUpdates.size()) {
-            if (!movieUpdates.get(i).getAdult()) {
+            if (movieUpdates.get(i).getAdult() != null && !movieUpdates.get(i).getAdult()) {
                 latestChangedMovies.add(movieUpdates.get(i).getId());
             }
             i++;
