@@ -18,6 +18,7 @@ import com.learning.android.movieman.R;
 import com.learning.android.movieman.activity.AboutActivity;
 import com.learning.android.movieman.activity.FavouritesActivity;
 import com.learning.android.movieman.activity.MainActivity;
+import com.learning.android.movieman.activity.StatisticsActivity;
 import com.learning.android.movieman.activity.WatchlistActivity;
 import com.learning.android.movieman.adapter.NavbarRecyclerAdapter;
 import com.learning.android.movieman.adapter.RecyclerViewSelectionListener;
@@ -27,8 +28,8 @@ public class NavigationDrawerFragment extends Fragment implements RecyclerViewSe
     private static final String PREF_FILE_NAME = "testpref";
     private static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
 
-    private String[] titles = {"Home", "Watchlist", "Favorites", "About"};
-    private int[] icons = {R.drawable.ic_home_grey600_36dp, R.drawable.ic_theater_grey600_36dp, R.drawable.ic_star_grey600_36dp, R.drawable.ic_xml_grey600_36dp};
+    private String[] titles = {"Home", "Watchlist", "Favorites", "Statistics", "About"};
+    private int[] icons = {R.drawable.ic_home_grey600_36dp, R.drawable.ic_theater_grey600_36dp, R.drawable.ic_star_grey600_36dp, R.drawable.ic_chart_bar_grey600_36dp, R.drawable.ic_xml_grey600_36dp};
 
     private ActionBarDrawerToggle drawerToggle;
     private DrawerLayout drawerLayout;
@@ -124,7 +125,9 @@ public class NavigationDrawerFragment extends Fragment implements RecyclerViewSe
             intent = new Intent(getActivity(), WatchlistActivity.class);
         } else if (position == 3 && !getActivity().getClass().equals(FavouritesActivity.class)) {
             intent = new Intent(getActivity(), FavouritesActivity.class);
-        } else if (position == 4 && !getActivity().getClass().equals(AboutActivity.class)) {
+        } else if (position == 4 && !getActivity().getClass().equals(StatisticsActivity.class)) {
+            intent = new Intent(getActivity(), StatisticsActivity.class);
+        } else if (position == 5 && !getActivity().getClass().equals(AboutActivity.class)) {
             intent = new Intent(getActivity(), AboutActivity.class);
         }
         if (intent != null) {

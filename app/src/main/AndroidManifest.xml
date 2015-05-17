@@ -68,6 +68,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.learning.android.movieman.activity.MainActivity" />
         </activity>
+        <activity
+            android:name=".activity.StatisticsActivity"
+            android:label="@string/title_activity_statistics"
+            android:parentActivityName=".activity.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.learning.android.movieman.activity.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
