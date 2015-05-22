@@ -61,7 +61,7 @@ public class Repository {
     public String toggleWatchlist(Long movieId) {
         MovieState movieState = dbHandler.getMovieState(movieId);
         if (movieState == null) {
-            movieState = new MovieState(movieId, false, true);
+            movieState = new MovieState(movieId, false, true, null);
             dbHandler.persistMovieState(movieState);
             return "Added to watchlist";
         } else if (movieState.isWatchlist()) {
@@ -78,7 +78,7 @@ public class Repository {
     public String toggleFavorite(Long movieId) {
         MovieState movieState = dbHandler.getMovieState(movieId);
         if (movieState == null) {
-            movieState = new MovieState(movieId, true, false);
+            movieState = new MovieState(movieId, true, false, null);
             dbHandler.persistMovieState(movieState);
             return "Added to favorites";
         } else if (movieState.isFavourite()) {

@@ -22,13 +22,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_MOVIE_ID = "id";
     private static final String KEY_MOVIE_WATCHLIST = "watchlist";
     private static final String KEY_MOVIE_FAVORITE = "favorite";
+    private static final String KEY_MOVIE_USER_COMMENT = "userComment";
 
     private static final String CREATE_TABLE_MOVIES = "CREATE TABLE " + TABLE_MOVIES + " (" +
             KEY_MOVIE_ID + " INTEGER PRIMARY KEY, " +
             KEY_MOVIE_WATCHLIST + " TEXT NOT NULL, " +
-            KEY_MOVIE_FAVORITE + " TEXT NOT NULL);";
+            KEY_MOVIE_FAVORITE + " TEXT NOT NULL, " +
+            KEY_MOVIE_USER_COMMENT + " TEXT);";
 
-    private static final String[] SELECT_ALL = new String[]{KEY_MOVIE_ID, KEY_MOVIE_WATCHLIST, KEY_MOVIE_FAVORITE};
+    private static final String[] SELECT_ALL = new String[]{KEY_MOVIE_ID, KEY_MOVIE_WATCHLIST, KEY_MOVIE_FAVORITE, KEY_MOVIE_USER_COMMENT};
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -55,6 +57,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_MOVIE_ID, movieState.getMovieId());
         values.put(KEY_MOVIE_WATCHLIST, String.valueOf(movieState.isWatchlist()));
         values.put(KEY_MOVIE_FAVORITE, String.valueOf(movieState.isFavourite()));
+        values.put(KEY_MOVIE_USER_COMMENT, movieState.getUserComment());
 
         db.insert(TABLE_MOVIES, null, values);
         db.close();
@@ -69,8 +72,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             if (cursor.moveToFirst()) {
                 int watchlistIndex = cursor.getColumnIndex(KEY_MOVIE_WATCHLIST);
                 int favouriteIndex = cursor.getColumnIndex(KEY_MOVIE_FAVORITE);
+                int userCommentIndex = cursor.getColumnIndex(KEY_MOVIE_USER_COMMENT);
 
-                result = new MovieState(movieId, Boolean.parseBoolean(cursor.getString(favouriteIndex)), Boolean.parseBoolean(cursor.getString(watchlistIndex)));
+                result = new MovieState(movieId, Boolean.parseBoolean(cursor.getString(favouriteIndex)), Boolean.parseBoolean(cursor.getString(watchlistIndex)), cursor.getString(userCommentIndex));
             }
             cursor.close();
         }
@@ -88,8 +92,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 int movieIdIndex = cursor.getColumnIndex(KEY_MOVIE_ID);
                 int watchlistIndex = cursor.getColumnIndex(KEY_MOVIE_WATCHLIST);
                 int favouriteIndex = cursor.getColumnIndex(KEY_MOVIE_FAVORITE);
+                int userCommentIndex = cursor.getColumnIndex(KEY_MOVIE_USER_COMMENT);
 
-                resultList.add(new MovieState(cursor.getLong(movieIdIndex), Boolean.parseBoolean(cursor.getString(favouriteIndex)), Boolean.parseBoolean(cursor.getString(watchlistIndex))));
+                resultList.add(new MovieState(cursor.getLong(movieIdIndex), Boolean.parseBoolean(cursor.getString(favouriteIndex)), Boolean.parseBoolean(cursor.getString(watchlistIndex)), cursor.getString(userCommentIndex)));
             }
             cursor.close();
         }
@@ -140,10 +145,5 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         db.update(TABLE_MOVIES, values, KEY_MOVIE_ID + "=?", new String[]{String.valueOf(movieState.getMovieId())});
         db.close();
-    }
-
-    private void showCurrentMovieState(Long movieId) {
-        MovieState persistedMovieState = getMovieState(movieId);
-        System.out.println("Persisted movie [id : " + persistedMovieState.getMovieId() + ", isWatchlist : " + persistedMovieState.isWatchlist() + ", isFavorite : " + persistedMovieState.isFavourite() + "]");
     }
 }

@@ -4,11 +4,13 @@ public class MovieState {
     private Long movieId;
     private boolean isFavourite;
     private boolean isWatchlist;
+    private String userComment;
 
-    public MovieState(Long movieId, boolean isFavourite, boolean isWatchlist) {
+    public MovieState(Long movieId, boolean isFavourite, boolean isWatchlist, String userComment) {
         this.movieId = movieId;
         this.isFavourite = isFavourite;
         this.isWatchlist = isWatchlist;
+        this.userComment = userComment;
     }
 
     public Long getMovieId() {
@@ -33,5 +35,13 @@ public class MovieState {
 
     public void setWatchlist(boolean isWatchlist) {
         this.isWatchlist = isWatchlist;
+    }
+
+    public String getUserComment() {
+        return userComment;
+    }
+
+    public void setUserComment(String userComment) {
+        this.userComment = userComment;
     }
 }

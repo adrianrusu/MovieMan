@@ -8,6 +8,7 @@ import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,11 +22,13 @@ import com.learning.android.movieman.R;
 import com.learning.android.movieman.backend.Repository;
 import com.learning.android.movieman.model.Crew;
 import com.learning.android.movieman.model.Movie;
+import com.learning.android.movieman.model.MovieState;
 import com.learning.android.movieman.model.YoutubeTrailer;
 import com.learning.android.movieman.util.JsonUtils;
 import com.learning.android.movieman.util.UrlEndpoints;
 
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -50,8 +53,10 @@ public class MovieDetailsActivity extends MovieDetailsBaseActivity {
     private int vibrantTitleTextColor;
 
     private Movie movie;
+    private MovieState currentMovieState;
 
     private TextView textTagline;
+    private TextView textUserComment;
     private TextView textDuration;
     private TextView textHomepage;
     private TextView textBudget;
@@ -61,6 +66,8 @@ public class MovieDetailsActivity extends MovieDetailsBaseActivity {
     private TextView textGenres;
     private TextView textOverview;
     private TextView textProductionCompanies;
+    private TextView textUserCommentLabel;
+    private Button btnAddUserComment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +77,7 @@ public class MovieDetailsActivity extends MovieDetailsBaseActivity {
 
         View adapterHeader = movieDetailsAdapter.getHeaderView();
         textTagline = (TextView) adapterHeader.findViewById(R.id.text_movie_tagline);
+        textUserComment = (TextView) adapterHeader.findViewById(R.id.text_user_comment);
         textBudget = (TextView) adapterHeader.findViewById(R.id.text_movie_budget);
         textRevenue = (TextView) adapterHeader.findViewById(R.id.text_movie_revenue);
         textDuration = (TextView) adapterHeader.findViewById(R.id.text_movie_duration);
@@ -79,6 +87,8 @@ public class MovieDetailsActivity extends MovieDetailsBaseActivity {
         textGenres = (TextView) adapterHeader.findViewById(R.id.text_movie_genres);
         textOverview = (TextView) adapterHeader.findViewById(R.id.text_movie_overview);
         textProductionCompanies = (TextView) adapterHeader.findViewById(R.id.text_production_companies);
+        textUserCommentLabel = (TextView) adapterHeader.findViewById(R.id.user_comment_label);
+        btnAddUserComment = (Button) adapterHeader.findViewById(R.id.button_add_comment);
 
         if (lowResBackdrop != null) {
             setBackdropImage(lowResBackdrop);
@@ -90,6 +100,18 @@ public class MovieDetailsActivity extends MovieDetailsBaseActivity {
         setTitle(null);
 
         sendApiRequest();
+        btnAddUserComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentMovieState == null) {
+                    currentMovieState = new MovieState(movieId, false, false, null);
+                    Repository.getInstance().getDbHandler().persistMovieState(currentMovieState);
+                }
+                currentMovieState.setUserComment("This is a good movie!");
+                Repository.getInstance().getDbHandler().updateMovieState(currentMovieState);
+                checkMovieCurrentState();
+            }
+        });
     }
 
     @Override
@@ -131,6 +153,7 @@ public class MovieDetailsActivity extends MovieDetailsBaseActivity {
         if (intent.hasExtra("source")) {
             source = intent.getExtras().getInt("source");
         }
+        currentMovieState = Repository.getInstance().getDbHandler().getMovieState(movieId);
     }
 
     private void sendApiRequest() {
@@ -232,6 +255,23 @@ public class MovieDetailsActivity extends MovieDetailsBaseActivity {
                     }
                 }
                 movieDetailsAdapter.setTrailers(trailers);
+            }
+        }
+
+        checkMovieCurrentState();
+    }
+
+    private void checkMovieCurrentState() {
+        if (currentMovieState != null) {
+            if (currentMovieState.getUserComment() == null) {
+                textUserCommentLabel.setVisibility(View.GONE);
+                textUserComment.setVisibility(View.GONE);
+                btnAddUserComment.setVisibility(View.VISIBLE);
+            } else {
+                btnAddUserComment.setVisibility(View.GONE);
+                textUserCommentLabel.setVisibility(View.VISIBLE);
+                textUserComment.setVisibility(View.VISIBLE);
+                textUserComment.setText(currentMovieState.getUserComment());
             }
         }
     }
