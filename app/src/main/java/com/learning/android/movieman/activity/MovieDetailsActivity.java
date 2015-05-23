@@ -1,5 +1,7 @@
 package com.learning.android.movieman.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +31,6 @@ import com.learning.android.movieman.util.JsonUtils;
 import com.learning.android.movieman.util.UrlEndpoints;
 
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -103,13 +105,35 @@ public class MovieDetailsActivity extends MovieDetailsBaseActivity {
         btnAddUserComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (currentMovieState == null) {
-                    currentMovieState = new MovieState(movieId, false, false, null);
-                    Repository.getInstance().getDbHandler().persistMovieState(currentMovieState);
-                }
-                currentMovieState.setUserComment("This is a good movie!");
-                Repository.getInstance().getDbHandler().updateMovieState(currentMovieState);
-                checkMovieCurrentState();
+                AlertDialog.Builder alert = new AlertDialog.Builder(MovieDetailsActivity.this);
+                alert.setTitle("Add user comment");
+                alert.setMessage("User commend");
+
+                final EditText inputUserComment = new EditText(MovieDetailsActivity.this);
+                alert.setView(inputUserComment);
+
+                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Confirmed
+                        if (currentMovieState == null) {
+                            currentMovieState = new MovieState(movieId, false, false, null);
+                            Repository.getInstance().getDbHandler().persistMovieState(currentMovieState);
+                        }
+                        currentMovieState.setUserComment(inputUserComment.getText().toString());
+                        Repository.getInstance().getDbHandler().updateMovieState(currentMovieState);
+                        checkMovieCurrentState();
+                    }
+                });
+
+                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Canceled
+                    }
+                });
+
+                alert.show();
             }
         });
     }
@@ -153,7 +177,6 @@ public class MovieDetailsActivity extends MovieDetailsBaseActivity {
         if (intent.hasExtra("source")) {
             source = intent.getExtras().getInt("source");
         }
-        currentMovieState = Repository.getInstance().getDbHandler().getMovieState(movieId);
     }
 
     private void sendApiRequest() {
@@ -272,6 +295,11 @@ public class MovieDetailsActivity extends MovieDetailsBaseActivity {
                 textUserCommentLabel.setVisibility(View.VISIBLE);
                 textUserComment.setVisibility(View.VISIBLE);
                 textUserComment.setText(currentMovieState.getUserComment());
+            }
+        } else {
+            currentMovieState = Repository.getInstance().getDbHandler().getMovieState(movieId);
+            if (currentMovieState != null) {
+                checkMovieCurrentState();
             }
         }
     }

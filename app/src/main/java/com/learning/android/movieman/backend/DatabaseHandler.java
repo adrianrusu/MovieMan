@@ -142,6 +142,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_MOVIE_WATCHLIST, String.valueOf(movieState.isWatchlist()));
         values.put(KEY_MOVIE_FAVORITE, String.valueOf(movieState.isFavourite()));
+        values.put(KEY_MOVIE_USER_COMMENT, String.valueOf(movieState.getUserComment()));
 
         db.update(TABLE_MOVIES, values, KEY_MOVIE_ID + "=?", new String[]{String.valueOf(movieState.getMovieId())});
         db.close();
